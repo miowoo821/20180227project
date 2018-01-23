@@ -31,6 +31,7 @@ public class Activity_list extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         dao=new Activities_DAO_DB_Impl(this);
+        lv2=(ListView)findViewById(R.id.listView2);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,7 +45,7 @@ public class Activity_list extends AppCompatActivity {
         builder.setTitle("登錄活動");
         LayoutInflater inflater=LayoutInflater.from(Activity_list.this);
         final View newactivity=inflater.inflate(R.layout.newactivity,null);
-        lv2=(ListView)findViewById(R.id.listView2);
+        lv2=(ListView)findViewById(R.id.listView2);//這邊只有public boolean onOptionsItemSelected(MenuItem item) {裡面的人能用
         final TextView tv1=newactivity.findViewById(R.id.act_start_date);
         final TextView tv2=newactivity.findViewById(R.id.act_end_date);
         final TextView tv3=newactivity.findViewById(R.id.feedback_start_date);
@@ -211,9 +212,6 @@ public class Activity_list extends AppCompatActivity {
                memo.getText().toString()
                 ) );
 
-
-
-
                 Toast.makeText(Activity_list.this,"新增成功",Toast.LENGTH_SHORT).show();
             }
 
@@ -234,7 +232,7 @@ public class Activity_list extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
        Log.d("GHDGSAFFDSGD",String.valueOf(dao.get_activity_List(this).getStringConversionColumn()));
-       lv2.setAdapter(dao.get_activity_List(Activity_list.this));
+       lv2.setAdapter(dao.get_activity_List(Activity_list.this));//lv2記得要在大家都用的到的地方findviewbyid
 
     }
 }
