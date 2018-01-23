@@ -1,9 +1,8 @@
 package com.example.mio.a20180122test;
 
 import android.app.DatePickerDialog;
-import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.database.Cursor;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,6 +32,16 @@ public class Activity_list extends AppCompatActivity {
 
         dao=new Activities_DAO_DB_Impl(this);
         lv2=(ListView)findViewById(R.id.listView2);
+
+        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent it=new Intent(Activity_list.this,Activity_list_detail.class);
+                it.putExtra("position",dao.get_activity_List(Activity_list.this).getItemId(i));
+                //it.putExtra("position",i+1);
+                startActivity(it);
+            }
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

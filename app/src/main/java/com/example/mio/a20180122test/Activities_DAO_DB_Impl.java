@@ -48,10 +48,12 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     public SimpleCursorAdapter get_activity_List(Context context) {//context引數由外面給，這樣SimpleCursorAdapter就不用再現在給context
     this.context=context;
 //        ArrayList<Activities> mylist=new ArrayList<>();//以SimpleCursorAdapter取代ArrayList
+
         Cursor c=db.query("Activities_list", new String[] {
                 "_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
                 null, null, null, null, null);
 //       c.moveToFirst();
+      //  c.moveToPosition(3);
         SimpleCursorAdapter  adapter=new SimpleCursorAdapter(context,R.layout.act_cursoradapter,c,
                 new String[] {"_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
                 new int[]{R.id.textView14,R.id.textView15,R.id.textView16,R.id.textView17,R.id.textView18,R.id.textView19,R.id.textView20,R.id.textView21,R.id.textView22},
@@ -64,13 +66,17 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //                mylist.add(s);
 //            }
 //        }
-        Log.d("GHDGSAFFDSGD",String.valueOf(adapter.getCursor()));
-        Log.d("GHDGSAFFDSGD",String.valueOf(adapter.areAllItemsEnabled()));
         return adapter;
     }
 
     @Override
-    public Activities get_activity(int _id) {
+    public Activities get_activity(int id) {
+        Cursor c=db.query("Activities_list", new String[] {"_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"}
+                , "_id=?", new String[]{String.valueOf(id)}, null, null, null);
+        if(c.moveToFirst()) {
+            Activities activities = new Activities(c.getInt(0), c.getString(1), c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
+            return activities;
+        }
         return null;
     }
 
