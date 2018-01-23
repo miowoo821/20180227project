@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.mio.a20180122test.data.Activities;
+
 public class Activity_list_detail extends AppCompatActivity {
 
     TextView tv1,tv2,tv3,tv4,tv5;

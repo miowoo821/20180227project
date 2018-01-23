@@ -4,13 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
-import com.example.mio.a20180122test.Activities;
-import com.example.mio.a20180122test.Activity_Interface;
-import com.example.mio.a20180122test.My_DB_Helper;
+import com.example.mio.a20180122test.data.Activities;
 
 import java.util.ArrayList;
 
@@ -45,28 +40,23 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     }
 
     @Override
-    public SimpleCursorAdapter get_activity_List(Context context) {//context引數由外面給，這樣SimpleCursorAdapter就不用再現在給context
-    this.context=context;
-//        ArrayList<Activities> mylist=new ArrayList<>();//以SimpleCursorAdapter取代ArrayList
+    public ArrayList<Activities> get_activity_List( ) {
+
+        ArrayList<Activities> my_act_list=new ArrayList<>();
 
         Cursor c=db.query("Activities_list", new String[] {
                 "_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
                 null, null, null, null, null);
-//       c.moveToFirst();
-      //  c.moveToPosition(3);
-        SimpleCursorAdapter  adapter=new SimpleCursorAdapter(context,R.layout.act_cursoradapter,c,
-                new String[] {"_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
-                new int[]{R.id.textView14,R.id.textView15,R.id.textView16,R.id.textView17,R.id.textView18,R.id.textView19,R.id.textView20,R.id.textView21,R.id.textView22},
-                1);
-//        if(c.moveToFirst()){
-//            Activities s1=new Activities(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
-//            mylist.add(s1);
-//            while (c.moveToNext()){
-//                Activities s=new Activities(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
-//                mylist.add(s);
-//            }
-//        }
-        return adapter;
+
+        if(c.moveToFirst()){
+            Activities s1=new Activities(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
+            my_act_list.add(s1);
+            while (c.moveToNext()){
+                Activities s=new Activities(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
+                my_act_list.add(s);
+            }
+        }
+        return my_act_list;
     }
 
     @Override

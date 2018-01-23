@@ -18,6 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.data.Activities;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Activity_list extends AppCompatActivity {
@@ -25,19 +28,29 @@ public class Activity_list extends AppCompatActivity {
     public static Activity_Interface dao;
     String  actd;
     ListView lv2;
+    ActlistAdapter adapter;
+    ArrayList my_act_list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
         dao=new Activities_DAO_DB_Impl(this);
+
+
+        my_act_list=new ArrayList();
+        adapter=new ActlistAdapter(Activity_list.this,my_act_list);
         lv2=(ListView)findViewById(R.id.listView2);
+        lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
 
         lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent it=new Intent(Activity_list.this,Activity_list_detail.class);
-                it.putExtra("position",dao.get_activity_List(Activity_list.this).getItemId(i));
+                //adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
+                Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List().get(i)));
+                //it.putExtra("position",dao.get_activity_List().get(i)._id);
                 //it.putExtra("position",i+1);
                 startActivity(it);
             }
@@ -241,8 +254,9 @@ public class Activity_list extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       Log.d("GHDGSAFFDSGD",String.valueOf(dao.get_activity_List(this).getStringConversionColumn()));
-       lv2.setAdapter(dao.get_activity_List(Activity_list.this));//lv2記得要在大家都用的到的地方findviewbyid
-
+        Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List()));
+//        adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
+//       lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid
+//這兩行上移
     }
 }

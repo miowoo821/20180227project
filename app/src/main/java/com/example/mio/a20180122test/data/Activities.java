@@ -1,11 +1,11 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.data;
 
 import java.util.Date;
 
 /**
  * Created by mio on 2018/1/22.
  */
-
+//不同資料夾才要public
 public class Activities {
     public int  _id;
     public String Activity_Name;
