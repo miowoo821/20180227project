@@ -46,7 +46,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
         Cursor c=db.query("Activities_list", new String[] {
                 "_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
-                null, null, null, null, null);
+                null, null, null, null, "_id DESC");
 
         if(c.moveToFirst()){
             Activities s1=new Activities(c.getInt(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
@@ -72,11 +72,23 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override
     public boolean update_activity(Activities activities) {
-        return false;
+
+        ContentValues cv = new ContentValues();
+        cv.put("Activity_Name", activities.Activity_Name);
+        cv.put("Activity_S_D", activities.Activity_S_D);
+        cv.put("Activity_E_D", activities.Activity_E_D);
+        cv.put("Activity_F_S_D", activities.Activity_F_S_D);
+        cv.put("Activity_F_E_D", activities.Activity_F_E_D);
+        cv.put("Activity_F_Limited", activities.Activity_F_Limited);
+        cv.put("Activity_F_Ratio", activities.Activity_F_Ratio);
+        cv.put("Activity_Memo", activities.Activity_Memo);
+        db.update("Activities_list", cv, "_id=?", new String[] {String.valueOf(activities._id)});//
+        return true;
     }
 
     @Override
     public boolean delete_activity(int _id) {
-        return false;
+        db.delete("Activities_list", "_id=?", new String[] {String.valueOf(_id)});
+        return true;
     }
 }

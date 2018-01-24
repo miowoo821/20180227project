@@ -38,9 +38,10 @@ public class Activity_list extends AppCompatActivity {
 
         dao=new Activities_DAO_DB_Impl(this);
 
-
         my_act_list=new ArrayList();
+        my_act_list=dao.get_activity_List();//記得丟資料進去
         adapter=new ActlistAdapter(Activity_list.this,my_act_list);
+        Log.d("TESTTTTTTTTTTTTT",String.valueOf(my_act_list));
         lv2=(ListView)findViewById(R.id.listView2);
         lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
 
@@ -50,7 +51,7 @@ public class Activity_list extends AppCompatActivity {
                 Intent it=new Intent(Activity_list.this,Activity_list_detail.class);
                 //adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
                 Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List().get(i)));
-                //it.putExtra("position",dao.get_activity_List().get(i)._id);
+                it.putExtra("position",dao.get_activity_List().get(i)._id);
                 //it.putExtra("position",i+1);
                 startActivity(it);
             }
@@ -64,6 +65,7 @@ public class Activity_list extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         AlertDialog.Builder builder=new AlertDialog.Builder(Activity_list.this);
         builder.setTitle("登錄活動");
         LayoutInflater inflater=LayoutInflater.from(Activity_list.this);
@@ -225,25 +227,24 @@ public class Activity_list extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {//按下確定後執行新增資料的行為
-                 dao.add(new Activities(act_name.getText().toString(),
-               act_S_D.getText().toString(),
-               act_E_D.getText().toString(),
-               F_S_D.getText().toString(),
-              F_E_D.getText().toString(),
-              Integer.valueOf(limted.getText().toString()),
-              Integer.valueOf( ratio.getText().toString()),
-               memo.getText().toString()
-                ) );
-
+                 dao.add(new Activities(act_name.getText().toString(), act_S_D.getText().toString(),
+                         act_E_D.getText().toString(), F_S_D.getText().toString(),F_E_D.getText().toString(),
+                         Integer.valueOf(limted.getText().toString()), Integer.valueOf( ratio.getText().toString()),
+                         memo.getText().toString()
+                         )
+                 );
                 Toast.makeText(Activity_list.this,"新增成功",Toast.LENGTH_SHORT).show();
+                onResume();
             }
 
         });
+
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
             }
+
         });
 
         builder.setView(newactivity);
@@ -254,9 +255,17 @@ public class Activity_list extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        refreshData();
         Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List()));
 //        adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
 //       lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid
 //這兩行上移
+    }
+    public void refreshData(){//重抓，會不會沒效率呢？
+
+        my_act_list=dao.get_activity_List();//記得丟資料進去
+        adapter=new ActlistAdapter(Activity_list.this,my_act_list);
+        lv2.setAdapter(adapter);
+        adapter.notifyDataSetChanged();//一定要加這個
     }
 }

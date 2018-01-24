@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">20180122test</string>
     <string name="expenditure">訂單金額</string>
+    <string name="edit">修改</string>
     <string name="ID">ID</string>
     <string name="date">日期</string>
     <string name="memo">備註</string>
@@ -15,4 +16,7 @@
     <string name="act_list_feedback_ratio">回饋倍數</string>
     <string name="act_list_feedback_limited">回饋上限</string>
     <string name="act_list_feedback_now">目前回饋</string>
+    <string name="delete">刪除</string>
+    <string name="back">返回</string>
+
 </resources>
