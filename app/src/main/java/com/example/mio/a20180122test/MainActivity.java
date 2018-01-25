@@ -20,6 +20,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.data.Order_Act_Point;
+import com.example.mio.a20180122test.data.Orders;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -30,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private int mYear, mMonth, mDay;
     ArrayList my_order_act_list;
     Order_Act_List_Adapter adapter;
-
+    boolean chks[];
     public static Activity_Interface dao;
     ListView lv3;
     @Override
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         final TextView tv1=neworder.findViewById(R.id.New_order_date);
         final TextView tv2=neworder.findViewById(R.id.New_order_N_point);
         final EditText ed1=neworder.findViewById(R.id.New_order_amount);
-        EditText ed2=neworder.findViewById(R.id.New_order_memo);
+        final EditText ed2=neworder.findViewById(R.id.New_order_memo);
 
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +130,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         dao=new Activities_DAO_DB_Impl(MainActivity.this);
                         my_order_act_list=new ArrayList();
                         my_order_act_list=dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString()));
-                        adapter=new Order_Act_List_Adapter(MainActivity.this,my_order_act_list);
+
+                        chks = new boolean[my_order_act_list.size()];
+                        adapter=new Order_Act_List_Adapter(MainActivity.this,my_order_act_list,chks);
+
                         lv3=neworder.findViewById(R.id.listView3);
                         lv3.setAdapter(adapter);
                     }
@@ -140,28 +146,58 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 tv2.setText(String.valueOf( Integer.valueOf(ed1.getText().toString())/100));
 
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
             }
         };
-            ed1.addTextChangedListener(textWatcher);
-
+        ed1.addTextChangedListener(textWatcher);
 
         builder.setView(neworder);
         builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+               long get_Newest_OrderID=dao.add_order(new Orders(//新增到訂單資料表
+                        String.valueOf(tv1.getText().toString()),//tv1=New_order_date
+                        Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
+                        Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
+                        String.valueOf(ed2.getText().toString())//ed2=New_order_memo
+                ));
+                Log.d("20180125001",String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())));
 
+                for (int i1=0;i1<chks.length;i1++)
+                {
+                    if (chks[i1])
+                    {
+                        dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
+                                get_Newest_OrderID,
+                                dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
+                                dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())
+
+                        ));
+                        Log.d("20180125001",String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())));
+
+                    }
+                }
+//                StringBuilder sb = new StringBuilder();
+//                for (int i1=0;i<chks.length;i1++)
+//                {
+//                    if (chks[i1])
+//                    {
+//
+//                    }
+//                }
+                Log.d("test20180125",String.valueOf(chks.length));
+                Log.d("test20180125",String.valueOf(chks.length));
+                Log.d("test20180125",String.valueOf(my_order_act_list.size()));
             }
         });
+
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

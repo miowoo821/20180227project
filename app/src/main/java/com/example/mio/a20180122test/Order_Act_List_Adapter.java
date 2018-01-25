@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.example.mio.a20180122test.data.Activities;
@@ -20,11 +22,11 @@ import java.util.ArrayList;
 public class Order_Act_List_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Activities> my_order_act_list;
-
-    public Order_Act_List_Adapter(Context context,ArrayList<Activities> my_order_act_list){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
+    boolean chks[];
+    public Order_Act_List_Adapter(Context context,ArrayList<Activities> my_order_act_list,boolean chks[]){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
         this.context=context;
         this.my_order_act_list=my_order_act_list;
-
+        this.chks = chks;
     }
     @Override
     public int getCount() {
@@ -42,14 +44,14 @@ public class Order_Act_List_Adapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
     ViewHolder viewHolder;
         if(view==null){
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.new_order_act_list, null);
             viewHolder = new ViewHolder();
             viewHolder.tv1 = view.findViewById(R.id.order_act_list_tv);
-
+            viewHolder.chk = (CheckBox) view.findViewById(R.id.checkBox);
             view.setTag(viewHolder);
         }
         else
@@ -60,9 +62,19 @@ public class Order_Act_List_Adapter extends BaseAdapter {
         Log.d("TEST",String.valueOf(my_order_act_list.get(i)));
         viewHolder.tv1.setText(my_order_act_list.get(i).Activity_Name);
 
+        viewHolder.chk.setOnCheckedChangeListener(null);
+        viewHolder.chk.setChecked(chks[i]);
+        viewHolder.chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                chks[i] = b;
+            }
+        });
+
         return view;
     }
     static class ViewHolder{
         TextView tv1;
+        CheckBox chk;
     }
 }

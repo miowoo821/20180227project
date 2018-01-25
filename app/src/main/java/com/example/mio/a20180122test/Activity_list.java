@@ -55,6 +55,7 @@ public class Activity_list extends AppCompatActivity {
                 Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List().get(i)));
                 it.putExtra("position",dao.get_activity_List().get(i)._id);
                 //it.putExtra("position",i+1);
+
                 startActivity(it);
             }
         });
@@ -259,7 +260,8 @@ public class Activity_list extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {//按下確定後執行新增資料的行為
 
-                 dao.add(new Activities(act_name.getText().toString(),
+                 dao.add(new Activities(
+                         act_name.getText().toString(),
                          Integer.valueOf( act_S_D.getText().toString()),
                          Integer.valueOf(act_E_D.getText().toString()),
                          F_S_D.getText().toString(),

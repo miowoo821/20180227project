@@ -1,6 +1,7 @@
 package com.example.mio.a20180122test;
 
 import com.example.mio.a20180122test.data.Activities;
+import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
 
 import java.util.ArrayList;
@@ -18,8 +19,11 @@ public interface Activity_Interface {
     public Activities get_activity(int _id);
     public boolean update_activity(Activities activities);
     public boolean delete_activity(int _id);
+//------------------------------------------------------------------------------
+    public boolean add_order_act(Order_Act_Point order_act_point);
 
-    public boolean add_order(Orders orders);
+//------------------------------------------------------------------------------
+    public long add_order(Orders orders);
     public ArrayList<Orders> get_order_List_filter(int date);
     public ArrayList<Orders> get_order_List();
     public Activities get_order(int _id);

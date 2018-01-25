@@ -4,8 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.mio.a20180122test.data.Activities;
+import com.example.mio.a20180122test.data.Order_Act_Point;
+import com.example.mio.a20180122test.data.Orders;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +31,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
 
     }
+
+    //----------------------Activities.java---------------------------------------------------------
     @Override
     public boolean add(Activities activities) {
         ContentValues cv=new ContentValues();
@@ -39,7 +44,9 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Activity_F_Limited",activities.Activity_F_Limited);
         cv.put("Activity_F_Ratio",activities.Activity_F_Ratio);
         cv.put("Activity_Memo",activities.Activity_Memo);
-        db.insert("Activities_list",null,cv);
+        long id=db.insert("Activities_list",null,cv);
+        //加long可以取的最新插入的主鍵欸，不加也可以執行，只是不知道怎麼抓主鍵(原碼db.insert("Activities_list",null,cv);)
+        Log.d("SDFSDFSDFSDFDS",String.valueOf(id));//測試
         return true;
     }
     @Override
@@ -118,18 +125,40 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         return true;
     }
 
+
+//----------Order_Act_Point.java--------------------------------------------------------------------
     @Override
-    public boolean add_order(Activities activities) {
-        return false;
+    public boolean add_order_act(Order_Act_Point order_act_point) {
+        ContentValues cv=new ContentValues();
+        cv.put("Order_ID_",order_act_point.Order_ID);
+        cv.put("Order_Act",order_act_point.Order_Act);
+        cv.put("Order_Act_Point",order_act_point.Order_Act_Point);
+        db.insert("Order_ActPoint_list",null,cv);
+        return  true;
+    }
+
+//-----------------Orders.java----------------------------------------------------------------------
+
+    @Override
+    public long add_order(Orders orders) {
+        ContentValues cv=new ContentValues();
+        cv.put("Order_Date",orders.Order_Date);
+        cv.put("Order_Account",orders.Order_Account);
+        cv.put("Order_Normal_Point",orders.Order_Normal_Point);
+        cv.put("Order_Memo",orders.Order_Memo);
+        long id=db.insert("Order_list",null,cv);//前面加個long 就可以用變數取得主鍵欸
+
+        Log.d("SDFSDFSDFSDFDS",String.valueOf(id));
+        return  id;
     }
 
     @Override
-    public ArrayList<Activities> get_order_List_filter(int date) {
+    public ArrayList<Orders> get_order_List_filter(int date) {
         return null;
     }
 
     @Override
-    public ArrayList<Activities> get_order_List() {
+    public ArrayList<Orders> get_order_List() {
         return null;
     }
 
@@ -139,13 +168,14 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     }
 
     @Override
-    public boolean update_order(Activities activities) {
+    public boolean update_order(Orders orders) {
         return false;
     }
+
 
     @Override
     public boolean delete_order(int _id) {
         return false;
     }
-
+//--------------------------------------------------------------------------------------------------
 }
