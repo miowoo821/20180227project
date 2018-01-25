@@ -6,20 +6,33 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import static com.example.mio.a20180122test.Activity_list.dao;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton imgbtn;
     private int mYear, mMonth, mDay;
+    ArrayList my_order_act_list;
+    Order_Act_List_Adapter adapter;
+
+    public static Activity_Interface dao;
+    ListView lv3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,23 +77,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);//新增一個會在MainActivity裡面彈出的Dialog物件
+         AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);//新增一個會在MainActivity裡面彈出的Dialog物件
         builder.setTitle("新增紀錄");
 
         LayoutInflater inflater=LayoutInflater.from(MainActivity.this);//layout解壓縮用的，可以把res裡面的layout挖出來
-        View neworder=inflater.inflate(R.layout.neworder,null);//第一個參數是要放入的Layout,第二個放null(為什麼)
-
+        final View neworder=inflater.inflate(R.layout.neworder,null);//第一個參數是要放入的Layout,第二個放null(為什麼)
         final TextView tv1=neworder.findViewById(R.id.New_order_date);
+        final TextView tv2=neworder.findViewById(R.id.New_order_N_point);
+        final EditText ed1=neworder.findViewById(R.id.New_order_amount);
+        EditText ed2=neworder.findViewById(R.id.New_order_memo);
+
         tv1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final Calendar c=Calendar.getInstance();//getInstance()是抓現在的時間
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
                 mDay = c.get(Calendar.DAY_OF_MONTH);
                 new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    //                    DatePickerDialog 是一個 Android 寫好的類別,
+//                    DatePickerDialog 是一個 Android 寫好的類別,
 //                    它可以提供使用者簡單操作的設定日期介面,
 //                    呼叫它的方式就是直接 new DatePickerDialog 並且傳入對應的參數
 //
@@ -93,19 +108,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {//i1   i2  i3是回傳年月日
                         i1=i1+1;//幹為什麼月份是從0開始拉，所以這邊把月份手動+1
-                        String str = (String.valueOf(i+"/"+i1+"/"+i2));
-                        //tv1.setText(String.valueOf(c));
+                        String s1= String.valueOf(i);
+                        String s2="";
+                        String s3="";
+                        if(i1<10){
+                            s2= "0"+String.valueOf(i1);
+                        }else {
+                            s2= String.valueOf(i1);
+                        }
+                        if(i2<10){
+                            s3= "0"+String.valueOf(i2);
+                        }else {
+                            s3=String.valueOf(i2);
+                        }
+                        String str = s1+s2+s3;
                         tv1.setText(str);
-                    }
-                }, mYear,mMonth, mDay).show();
 
+                        dao=new Activities_DAO_DB_Impl(MainActivity.this);
+                        my_order_act_list=new ArrayList();
+                        my_order_act_list=dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString()));
+                        adapter=new Order_Act_List_Adapter(MainActivity.this,my_order_act_list);
+                        lv3=neworder.findViewById(R.id.listView3);
+                        lv3.setAdapter(adapter);
+                    }
+                 }, mYear,mMonth, mDay).show();
             }
         });
 
+        TextWatcher textWatcher=new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                tv2.setText(String.valueOf( Integer.valueOf(ed1.getText().toString())/100));
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        };
+            ed1.addTextChangedListener(textWatcher);
 
 
         builder.setView(neworder);
-
         builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

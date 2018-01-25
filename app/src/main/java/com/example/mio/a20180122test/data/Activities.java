@@ -9,15 +9,15 @@ import java.util.Date;
 public class Activities {
     public int  _id;
     public String Activity_Name;
-    public String Activity_S_D;
-    public String Activity_E_D;
+    public int Activity_S_D;
+    public int Activity_E_D;
     public String Activity_F_S_D;
     public String Activity_F_E_D;
     public int Activity_F_Limited;
     public int Activity_F_Ratio;
     public String Activity_Memo;
 
-    public Activities(int _id,String Activity_Name, String Activity_S_D,String Activity_E_D ,String Activity_F_S_D, String Activity_F_E_D,int Activity_F_Limited,int Activity_F_Ratio,String Activity_Memo){
+    public Activities(int _id,String Activity_Name, int Activity_S_D,int Activity_E_D ,String Activity_F_S_D, String Activity_F_E_D,int Activity_F_Limited,int Activity_F_Ratio,String Activity_Memo){
         this._id=_id;
         this.Activity_Name=Activity_Name;
         this.Activity_S_D=Activity_S_D;
@@ -28,7 +28,7 @@ public class Activities {
         this.Activity_F_Ratio=Activity_F_Ratio;
         this.Activity_Memo=Activity_Memo;
     }
-    public Activities(String Activity_Name, String Activity_S_D,String Activity_E_D ,String Activity_F_S_D, String Activity_F_E_D,int Activity_F_Limited,int Activity_F_Ratio,String Activity_Memo){
+    public Activities(String Activity_Name, int Activity_S_D,int Activity_E_D ,String Activity_F_S_D, String Activity_F_E_D,int Activity_F_Limited,int Activity_F_Ratio,String Activity_Memo){
 
         this.Activity_Name=Activity_Name;
         this.Activity_S_D=Activity_S_D;

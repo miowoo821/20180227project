@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import com.example.mio.a20180122test.data.Activities;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,9 +38,9 @@ public class Activity_list extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        dao=new Activities_DAO_DB_Impl(this);
+        dao=new Activities_DAO_DB_Impl(this);//記得NEW他
 
-        my_act_list=new ArrayList();
+        my_act_list=new ArrayList();//記得NEW他
         my_act_list=dao.get_activity_List();//記得丟資料進去
         adapter=new ActlistAdapter(Activity_list.this,my_act_list);
         Log.d("TESTTTTTTTTTTTTT",String.valueOf(my_act_list));
@@ -86,6 +88,7 @@ public class Activity_list extends AppCompatActivity {
         final EditText memo=newactivity.findViewById(R.id.memo);
 
         tv1.setOnClickListener(new View.OnClickListener() {
+            //int mYear, mMonth, mDay;
             int mYear, mMonth, mDay;
             Calendar c;
             @Override
@@ -100,7 +103,21 @@ public class Activity_list extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         i1=i1+1;//幹為什麼月份是從0開始拉，所以這邊把月份手動+1
-                        actd = (String.valueOf(i+"/"+i1+"/"+i2));
+                        String s1= String.valueOf(i);
+                        String s2="";
+                        String s3="";
+                        if(i1<10){
+                            s2= "0"+String.valueOf(i1);
+                        }else {
+                            s2= String.valueOf(i1);
+                        }
+
+                        if(i2<10){
+                            s3= "0"+String.valueOf(i2);
+                        }else {
+                            s3=String.valueOf(i2);
+                        }
+                        actd = s1+s2+s3;
                         Log.d("GGGGGGGG1111111",actd);
                         tv1.setText(actd);
 
@@ -110,8 +127,22 @@ public class Activity_list extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                                 i1=i1+1;//幹為什麼月份是從0開始拉，所以這邊把月份手動+1
-                                actd = (String.valueOf(i+"/"+i1+"/"+i2));
-                                Log.d("GGGGGGGG2",actd);
+                                String s1= String.valueOf(i);
+                                String s2="";
+                                String s3="";
+                                if(i1<10){
+                                    s2= "0"+String.valueOf(i1);
+                                }else {
+                                    s2= String.valueOf(i1);
+                                }
+
+                                if(i2<10){
+                                    s3= "0"+String.valueOf(i2);
+                                }else {
+                                    s3=String.valueOf(i2);
+                                }
+                                actd = s1+s2+s3;
+                                Log.d("GGGGGGGG1111111",actd);
                                 tv2.setText(actd);
                                 Log.d("GGGGGGGG222222222",tv2.getText().toString());
                             }
@@ -227,9 +258,14 @@ public class Activity_list extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {//按下確定後執行新增資料的行為
-                 dao.add(new Activities(act_name.getText().toString(), act_S_D.getText().toString(),
-                         act_E_D.getText().toString(), F_S_D.getText().toString(),F_E_D.getText().toString(),
-                         Integer.valueOf(limted.getText().toString()), Integer.valueOf( ratio.getText().toString()),
+
+                 dao.add(new Activities(act_name.getText().toString(),
+                         Integer.valueOf( act_S_D.getText().toString()),
+                         Integer.valueOf(act_E_D.getText().toString()),
+                         F_S_D.getText().toString(),
+                         F_E_D.getText().toString(),
+                         Integer.valueOf(limted.getText().toString()),
+                         Integer.valueOf( ratio.getText().toString()),
                          memo.getText().toString()
                          )
                  );

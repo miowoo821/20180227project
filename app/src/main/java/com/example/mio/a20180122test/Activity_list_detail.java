@@ -55,8 +55,8 @@ public class Activity_list_detail extends AppCompatActivity {
 
     public void clickacteditcheck(View v){
          String Activity_Name=ed1.getText().toString();
-         String Activity_S_D=tv2.getText().toString();
-         String Activity_E_D=tv3.getText().toString();
+         int Activity_S_D=Integer.valueOf(tv2.getText().toString());
+         int Activity_E_D=Integer.valueOf(tv3.getText().toString());
          String Activity_F_S_D=tv4.getText().toString();
          String Activity_F_E_D=tv5.getText().toString();
          int Activity_F_Limited=Integer.valueOf(ed3.getText().toString());
