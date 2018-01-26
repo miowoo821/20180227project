@@ -31,10 +31,10 @@
         android:id="@+id/AdapterActList_F_N"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/act_list_feedback_now"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
-        app:layout_constraintStart_toEndOf="@+id/AdapterActList_F_L"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

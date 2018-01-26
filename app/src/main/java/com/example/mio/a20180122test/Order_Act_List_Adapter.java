@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Created by mio on 2018/1/25.
  */
-
+//新增訂單裡面的符合當天日期活動列表
 public class Order_Act_List_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Activities> my_order_act_list;

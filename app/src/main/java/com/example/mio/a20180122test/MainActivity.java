@@ -176,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     {
                         dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
                                 get_Newest_OrderID,
+                                dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1)._id,
                                 dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
                                 dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())
 

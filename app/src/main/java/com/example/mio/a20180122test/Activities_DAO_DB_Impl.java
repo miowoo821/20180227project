@@ -125,16 +125,68 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         return true;
     }
 
+    @Override
+    public int get_act_now_point(int Order_Act_ID_1) {
+        //第一個參數從外面傳入一個作為篩選條件的欄位，第二個參數是從外面傳入一個要操作加總的欄位，第三個參數是決定要抓出哪一筆資料的點數加總(只留下某筆資料)
 
-//----------Order_Act_Point.java--------------------------------------------------------------------
+        Cursor c= db.rawQuery(
+                "SELECT Order_Act_ID, SUM(Order_Act_Point) FROM Order_ActPoint_list GROUP BY Order_Act_ID ",null);
+        //語法意思：從Order_ActPoint_list依照Order_Act_ID對Order_Act_Point作加總，並把加總過後的欄位命名為SUM(Order_Act_Point)
+        //執行完上面的語法會得到一張兩個欄位的表
+        // 第一欄是GROUP BY後的Order_Act_ID組成(Order_Act_ID不重複的表)，第二欄是依照Order_Act_ID對act_now_point作加總產生的的欄位(多個Order_Act_ID的act_now_point加總成一筆)
+        //然後只有兩欄，一欄篩選條件的欄位，另一欄是條件加總的欄位
+        //並做篩選只留下與Order_Act_ID符合的資料(只有一筆)
+
+
+
+        c.moveToFirst();
+
+
+        for(int i=0;i<c.getCount();i++){
+            if( String.valueOf(c.getInt(0))!= String.valueOf(Order_Act_ID_1)) {
+                c.moveToNext();
+            }
+        }
+
+        Log.d("TRFSDAG", String.valueOf(Order_Act_ID_1));
+        Log.d("TRFSDAG", String.valueOf(c.getInt(1)));
+
+        return c.getInt(1);
+    }
+
+
+    //----------Order_Act_Point.java--------------------------------------------------------------------
     @Override
     public boolean add_order_act(Order_Act_Point order_act_point) {
         ContentValues cv=new ContentValues();
         cv.put("Order_ID_",order_act_point.Order_ID);
+        cv.put("Order_Act_ID",order_act_point.Order_Act_ID);
         cv.put("Order_Act",order_act_point.Order_Act);
         cv.put("Order_Act_Point",order_act_point.Order_Act_Point);
         db.insert("Order_ActPoint_list",null,cv);
         return  true;
+    }
+
+    @Override
+    public ArrayList<Order_Act_Point> get_order_act_list() {
+
+        ArrayList<Order_Act_Point> my_act_list=new ArrayList<>();
+        Cursor c=db.query("Order_ActPoint_list", new String[] {
+                        "_id", "Order_ID_", "Order_Act_ID","Order_Act","Order_Act_Point"},
+                null,null, null, null, "_id DESC");
+
+        if(c.moveToFirst()){
+            Order_Act_Point s1=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+            my_act_list.add(s1);
+            while (c.moveToNext()){
+                Order_Act_Point s=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+                my_act_list.add(s);
+            }
+        }
+
+        return my_act_list;
+
+
     }
 
 //-----------------Orders.java----------------------------------------------------------------------
@@ -159,7 +211,21 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override
     public ArrayList<Orders> get_order_List() {
-        return null;
+        ArrayList<Orders> my_act_list=new ArrayList<>();
+        Cursor c=db.query("Order_list", new String[] {
+                        "_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"},
+                null,null, null, null, "_id DESC");
+
+        if(c.moveToFirst()){
+            Orders s1=new Orders(c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),c.getString(4));
+            my_act_list.add(s1);
+            while (c.moveToNext()){
+                Orders s=new Orders(c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),c.getString(4));
+                my_act_list.add(s);
+            }
+        }
+
+        return my_act_list;
     }
 
     @Override
@@ -169,6 +235,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override
     public boolean update_order(Orders orders) {
+
         return false;
     }
 

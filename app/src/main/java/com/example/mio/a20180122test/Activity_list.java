@@ -54,7 +54,7 @@ public class Activity_list extends AppCompatActivity {
                 //adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
                 Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List().get(i)));
                 it.putExtra("position",dao.get_activity_List().get(i)._id);
-                //it.putExtra("position",i+1);
+                //it.putExtra("position",i+1);//直接給數字不法抓到準確的id，因為有時候id不等於位置(順序)
 
                 startActivity(it);
             }

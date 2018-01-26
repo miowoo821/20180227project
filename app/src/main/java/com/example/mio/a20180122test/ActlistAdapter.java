@@ -1,6 +1,7 @@
 package com.example.mio.a20180122test;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class ActlistAdapter extends BaseAdapter {
     Context context;
     ArrayList<Activities> my_act_list;
+    public static Activity_Interface dao;
 
     public ActlistAdapter(Context context,ArrayList<Activities> my_act_list){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
         this.context=context;
@@ -44,6 +46,7 @@ public class ActlistAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         ViewHolder viewHolder;
+        dao=new Activities_DAO_DB_Impl(context);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
         if(view==null){
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.act_list_item, null);
@@ -59,8 +62,21 @@ public class ActlistAdapter extends BaseAdapter {
         }
         viewHolder.tv1.setText(my_act_list.get(i).Activity_Name);
        viewHolder.tv2.setText(String.valueOf(my_act_list.get(i).Activity_F_Limited));
-       viewHolder.tv3.setText(String.valueOf(my_act_list.get(i).Activity_F_Limited));
 
+
+       //viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(dao.get_order_act_list().get(i).Order_Act_ID)));
+        //上面這段程式碼以第i個viewHolder去抓第i個的dao.get_order_act_list，但第0個viewHolder不代表裝在裡面的
+        //要比較是要拿活動列表的ID去比才對
+       viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(dao.get_activity_List().get(i)._id)));
+
+
+        //若先抓第i個位置的view，在抓裡面的ID
+
+        Log.d("ADA", String.valueOf(i));
+        Log.d("ADAPTER0", String.valueOf(dao.get_order_act_list().get(0).Order_ID));
+        Log.d("ADAPTER1", String.valueOf(dao.get_order_act_list().get(1).Order_ID));
+        Log.d("ADAPTER2", String.valueOf(dao.get_order_act_list().get(2).Order_ID));
+        Log.d("ADAPTER", String.valueOf(dao.get_order_act_list().get(i).Order_Act_ID));
         return view;
     }
     static class ViewHolder{

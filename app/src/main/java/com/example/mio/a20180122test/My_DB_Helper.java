@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class My_DB_Helper extends SQLiteOpenHelper {
-    final static String DB_NAME = "Activities2.sqlite";
+    final static String DB_NAME = "Activities4.sqlite";
     final static int VERSION = 1;
 
     public My_DB_Helper(Context context) {
@@ -34,6 +34,7 @@ public class My_DB_Helper extends SQLiteOpenHelper {
                 "Order_Memo text)");
         sqLiteDatabase.execSQL("create table Order_ActPoint_list(_id integer primary key autoincrement,"+
                 "Order_ID_ text not null,"+
+                "Order_Act_ID int not null,"+
                 "Order_Act text not null,"+
                 "Order_Act_Point integer not null)");
     }
