@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Order_Act_Point;
@@ -128,6 +129,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
         db.delete("Activities_list", "_id=?", new String[] {String.valueOf(_id)});
+        db.delete("Order_ActPoint_list", "Order_Act_ID=?", new String[] {String.valueOf(_id)});
+
         db.close();
         return true;
     }
@@ -202,7 +205,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         return  true;
     }
 
-    @Override//以訂單ID刪除資料(訂單修改時使用)
+    @Override//以訂單ID刪除資料(訂單修改及訂單刪除時使用)
     public boolean delete_order_act(int id) {
         My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
@@ -314,9 +317,9 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         return null;
     }
 
-    @Override
-    public boolean update_order(Orders orders) {
-
+    @Override//修改訂單，同時牽一髮動全身的修改(刪除再新增)了訂單活動
+    public boolean update_order(Orders orders, int id, int date, int point,boolean chks[]) {
+////第一個參數用來修改訂單，第二個參數用來刪除訂單活動，第三個第四個參數來新增訂單活動資料表的兩個欄位(日期跟一般點數)，一般點數欄位其實可以刪掉拉，第五個參數是傳回勾勾的陣列，這樣才知道有幾個要跑
         My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -324,14 +327,30 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Order_Account", orders.Order_Account);
         cv.put("Order_Normal_Point", orders.Order_Normal_Point);
         cv.put("Order_Memo", orders.Order_Memo);
-
         db.update("Order_list", cv, "_id=?", new String[] {String.valueOf(orders._id_order)});//
+
+
+        delete_order_act(get_order_List().get(id)._id_order);//刪除訂單活動的舊資料(記得還要在新增修改後的)
+        for (int i1=0;i1<chks.length;i1++)
+        {
+            if (chks[i1])
+            {
+                add_order_act(new Order_Act_Point(//新增到訂單活動資料表
+                        get_order_List().get(id)._id_order,
+                        get_activity_List_filter(date).get(i1)._id,
+                        get_activity_List_filter(date).get(i1).Activity_Name,
+                        get_activity_List_filter(date).get(i1).Activity_F_Ratio*point
+                ));
+            }
+        }
         db.close();
         return true;
     }
 
     @Override
     public boolean delete_order(int _id) {
+
+
         return false;
     }
 //--------------------------------------------------------------------------------------------------

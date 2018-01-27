@@ -53,7 +53,6 @@ public class OrderRecord_page extends AppCompatActivity {
         my_act_list=dao.get_order_List();//記得丟資料進去
         adapter=new act_order_item_Adapter(OrderRecord_page.this,my_act_list);
 
-        Log.d("TESTTTTTTTTTTTTT",String.valueOf(my_act_list));
         lv=(ListView)findViewById(R.id.listView);
         lv.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
 
@@ -151,7 +150,6 @@ public class OrderRecord_page extends AppCompatActivity {
                     @Override
                     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                         tv2.setText(String.valueOf( Integer.valueOf(ed1.getText().toString())/100));
-
                     }
                     @Override
                     public void afterTextChanged(Editable editable) {
@@ -164,33 +162,30 @@ public class OrderRecord_page extends AppCompatActivity {
                 builderedit.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                         dao.update_order(new Orders(//新增到訂單資料表
                                 String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                                 Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
                                 Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
                                 String.valueOf(ed2.getText().toString())//ed2=New_order_memo
-                        ));
-                        //for(int i2=0;i2<dao.get_act_order_List_filter(i2).size();i2++){
-
+                        ),id,
+                                Integer.valueOf(tv1.getText().toString()),//tv1的值
+                                Integer.valueOf(tv2.getText().toString())//tv2的值
+                                ,chks);
+    //刪                    //for(int i2=0;i2<dao.get_act_order_List_filter(i2).size();i2++){
                         //}
-                        Log.d("TEEWGDHFJE!!!!!",String.valueOf(id));
-                        Log.d("TEEWGDHFJE!!!!!",String.valueOf(dao.get_order_List().get(id)._id_order));
-
-                        dao.delete_order_act(dao.get_order_List().get(id)._id_order);
-                        for (int i1=0;i1<chks.length;i1++)
-                        {
-                            if (chks[i1])
-                            {
-                                dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
-                                        dao.get_order_List().get(id)._id_order,
-                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1)._id,
-                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
-                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())
-
-                                ));
-                            }
-                        }
+                        //dao.delete_order_act(dao.get_order_List().get(id)._id_order);
+//  刪                      for (int i1=0;i1<chks.length;i1++)
+//                        {
+//                            if (chks[i1])
+//                            {
+//                                dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
+//                                        dao.get_order_List().get(id)._id_order,
+//                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1)._id,
+//                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
+//                                        dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())
+//                                ));
+//                            }
+//                        }
 //                StringBuilder sb = new StringBuilder();
 //                for (int i1=0;i<chks.length;i1++)
 //                {

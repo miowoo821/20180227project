@@ -1,5 +1,8 @@
 package com.example.mio.a20180122test;
 
+import android.text.TextWatcher;
+import android.widget.TextView;
+
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
@@ -32,6 +35,6 @@ public interface Activity_Interface {
     public ArrayList<Orders> get_order_List_filter(int id);
     public ArrayList<Orders> get_order_List();
     public Orders get_order(int _id);
-    public boolean update_order(Orders orders );
+    public boolean update_order(Orders orders, int id, int date, int point,boolean chks[]);//第一個參數用來修改訂單，第二個參數用來刪除訂單活動，第三個第四個參數來新增訂單活動資料表的兩個欄位(日期跟一般點數)，一般點數欄位其實可以刪掉拉，第五個參數是傳回勾勾的陣列，這樣才知道有幾個要跑
     public boolean delete_order(int _id);
 }
