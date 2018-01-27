@@ -26,15 +26,15 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     public Activities_DAO_DB_Impl(Context context){
         this.context=context;
-        My_DB_Helper my_db_helper=new My_DB_Helper(context);
-        db=my_db_helper.getWritableDatabase();
-
-
+//        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+//        db=my_db_helper.getWritableDatabase();
     }
 
     //----------------------Activities.java---------------------------------------------------------
     @Override
     public boolean add(Activities activities) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Activity_Name",activities.Activity_Name);
         cv.put("Activity_S_D",activities.Activity_S_D);
@@ -46,10 +46,13 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Activity_Memo",activities.Activity_Memo);
         long id=db.insert("Activities_list",null,cv);
         //加long可以取的最新插入的主鍵欸，不加也可以執行，只是不知道怎麼抓主鍵(原碼db.insert("Activities_list",null,cv);)
+        db.close();
         return true;
     }
     @Override//以日期作為篩選活動的條件，新增訂單或修改訂單時可自動依據訂單時間跳出符合的活動
     public ArrayList<Activities> get_activity_List_filter(int date){
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ArrayList<Activities> filter_act_list=new ArrayList<>();
         Cursor c = db.rawQuery("select * from Activities_list where Activity_S_D<="+date+" and Activity_E_D>="+date,null);
 //        Cursor c=db.query("Activities_list", new String[] {
@@ -64,6 +67,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 filter_act_list.add(s);
             }
         }
+        db.close();
         return filter_act_list;
     }
     @Override
@@ -71,7 +75,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //SQL語法篩選
 //        ArrayList<Activities> my_act_list=new ArrayList<>();
 //        Cursor c = db.rawQuery("select * from Activities_list where Activity_S_D<20180105 and Activity_E_D>20180105",null);
-
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ArrayList<Activities> my_act_list=new ArrayList<>();
         Cursor c=db.query("Activities_list", new String[] {
                 "_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
@@ -85,22 +90,26 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 my_act_list.add(s);
             }
         }
-
+        db.close();
         return my_act_list;
     }
     @Override
     public Activities get_activity(int id) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         Cursor c=db.query("Activities_list", new String[] {"_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"}
                 , "_id=?", new String[]{String.valueOf(id)}, null, null, null);
         if(c.moveToFirst()) {
             Activities activities = new Activities(c.getInt(0), c.getString(1), c.getInt(2),c.getInt(3),c.getString(4),c.getString(5),c.getInt(6),c.getInt(7),c.getString(8));
             return activities;
         }
+        db.close();
         return null;
     }
     @Override
     public boolean update_activity(Activities activities) {
-
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("Activity_Name", activities.Activity_Name);
         cv.put("Activity_S_D", activities.Activity_S_D);
@@ -111,17 +120,22 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Activity_F_Ratio", activities.Activity_F_Ratio);
         cv.put("Activity_Memo", activities.Activity_Memo);
         db.update("Activities_list", cv, "_id=?", new String[] {String.valueOf(activities._id)});//
+        db.close();
         return true;
     }
     @Override
     public boolean delete_activity(int _id) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         db.delete("Activities_list", "_id=?", new String[] {String.valueOf(_id)});
+        db.close();
         return true;
     }
 
-    @Override//作加總
+    @Override//作活動目前獲得點數的加總
     public int get_act_now_point(int Order_Act_ID_1) {
-
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
 //刪        第一個參數從外面傳入一個作為篩選條件的欄位，第二個參數是從外面傳入一個要操作加總的欄位，第三個參數是決定要抓出哪一筆資料的點數加總(只留下某筆資料)
 
 //        Cursor c= db.rawQuery(
@@ -149,25 +163,28 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
             }
             c.moveToNext();
         }
-
+        db.close();
         if (total_point>get_activity(Order_Act_ID_1).Activity_F_Limited){
             return get_activity(Order_Act_ID_1).Activity_F_Limited;
         }
         else {
             return total_point;
         }
-    }
 
+    }
 
     //----------Order_Act_Point.java--------------------------------------------------------------------
     @Override//新增訂單以及修改訂單時都會取用訂單活動表的新增功能
     public boolean add_order_act(Order_Act_Point order_act_point) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Order_ID_",order_act_point.Order_ID);
         cv.put("Order_Act_ID",order_act_point.Order_Act_ID);
         cv.put("Order_Act",order_act_point.Order_Act);
         cv.put("Order_Act_Point",order_act_point.Order_Act_Point);
         db.insert("Order_ActPoint_list",null,cv);
+        db.close();
         return  true;
     }
 
@@ -179,18 +196,26 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //        cv.put("Order_Act",order_act_point.Order_Act);
 //        cv.put("Order_Act_Point",order_act_point.Order_Act_Point);
 //        db.update("Order_ActPoint_list", cv, "_id=?", new String[] {String.valueOf(order_act_point)});
-       return  true;
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
+        db.close();
+        return  true;
     }
 
     @Override//以訂單ID刪除資料(訂單修改時使用)
     public boolean delete_order_act(int id) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         db.delete("Order_ActPoint_list", "Order_ID_=?", new String[] {String.valueOf(id)});
+        db.close();
         return true;
     }
 
     @Override//得到訂單活動表
     public ArrayList<Order_Act_Point> get_order_act_list() {
 
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ArrayList<Order_Act_Point> my_act_list=new ArrayList<>();
         Cursor c=db.query("Order_ActPoint_list", new String[] {
                         "_id", "Order_ID_", "Order_Act_ID","Order_Act","Order_Act_Point"},
@@ -204,14 +229,14 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 my_act_list.add(s);
             }
         }
-
+        db.close();
         return my_act_list;
-
-
     }
 
     @Override//篩選該ID所符合的活動出來
     public ArrayList<Order_Act_Point> get_act_order_List_filter(int id) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ArrayList<Order_Act_Point> get_order_List_filter=new ArrayList<>();
 
         Cursor c = db.rawQuery("select * from Order_ActPoint_list where Order_ID_="+id,null);
@@ -228,7 +253,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 get_order_List_filter.add(s);
             }
         }
-
+        db.close();
         return get_order_List_filter;
     }
 
@@ -236,13 +261,15 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override
     public long add_order(Orders orders) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Order_Date",orders.Order_Date);
         cv.put("Order_Account",orders.Order_Account);
         cv.put("Order_Normal_Point",orders.Order_Normal_Point);
         cv.put("Order_Memo",orders.Order_Memo);
         long id=db.insert("Order_list",null,cv);//前面加個long 就可以用變數取得主鍵欸
-
+        db.close();
         return  id;
     }
 
@@ -253,6 +280,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override//把order的資料全部抓出來
     public ArrayList<Orders> get_order_List() {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ArrayList<Orders> my_act_list=new ArrayList<>();
         Cursor c=db.query("Order_list", new String[] {
                         "_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"},
@@ -266,28 +295,30 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 my_act_list.add(s);
             }
         }
-
+        db.close();
         return my_act_list;
     }
 
     @Override
     public Orders get_order(int _id) {
 
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         Cursor c=db.query("Order_list", new String[] {"_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"}
                 , "_id=?", new String[]{String.valueOf(_id)}, null, null, null);
         if(c.moveToFirst()) {
             Orders orders = new Orders(c.getInt(0), c.getString(1), c.getInt(2),c.getInt(3),c.getString(4));
             return orders;
         }
-
-
-
+        db.close();
         return null;
     }
 
     @Override
     public boolean update_order(Orders orders) {
 
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("Order_Date", orders.Order_Date);
         cv.put("Order_Account", orders.Order_Account);
@@ -295,6 +326,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Order_Memo", orders.Order_Memo);
 
         db.update("Order_list", cv, "_id=?", new String[] {String.valueOf(orders._id_order)});//
+        db.close();
         return true;
     }
 
