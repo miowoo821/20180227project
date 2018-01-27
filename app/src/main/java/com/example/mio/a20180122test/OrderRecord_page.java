@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,8 +32,10 @@ public class OrderRecord_page extends AppCompatActivity {
     ListView lv;
     act_order_item_Adapter adapter;//給訂單列表用的
     Order_Act_List_Adapter adapter2;//給新增訂單裡面的活動列表用的
+    Order_Edit_Act_List_Adapter adapter3;//給修改訂單裡面的活動列表用的
     ArrayList my_act_list;
     ArrayList my_order_act_list;
+    ArrayList<Order_Act_Point> my_order_act_list_1;
     boolean chks[];
     public static Activity_Interface dao;
     private int mYear, mMonth, mDay;
@@ -67,18 +71,26 @@ public class OrderRecord_page extends AppCompatActivity {
                 final TextView tv2=neworder.findViewById(R.id.New_order_N_point);
                 final EditText ed1=neworder.findViewById(R.id.New_order_amount);
                 final EditText ed2=neworder.findViewById(R.id.New_order_memo);
-
+                id=i;//修改頁面的訂單ID
                 orders=OrderRecord_page.dao.get_order(dao.get_order_List().get(i)._id_order);
-                Log.d("20180127001",String.valueOf(orders));
 
                 tv1.setText(String.valueOf(orders.Order_Date));
                 tv2.setText(String.valueOf(orders.Order_Normal_Point));
                 ed1.setText(String.valueOf(orders.Order_Account));
                 ed2.setText(String.valueOf(orders.Order_Memo));
 
+                dao=new Activities_DAO_DB_Impl(OrderRecord_page.this);
 
+                my_order_act_list_1=new ArrayList();
+                my_order_act_list_1=dao.get_act_order_List_filter(dao.get_order_List().get(i)._id_order);
 
+                //chks = new boolean[my_order_act_list_1.size()];
 
+                adapter3=new Order_Edit_Act_List_Adapter(OrderRecord_page.this,my_order_act_list_1);
+
+                lv3=neworder.findViewById(R.id.listView3);
+
+                lv3.setAdapter(adapter3);
 
                 tv1.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -152,27 +164,31 @@ public class OrderRecord_page extends AppCompatActivity {
                 builderedit.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        long get_Newest_OrderID=dao.add_order(new Orders(//新增到訂單資料表
+
+                        dao.update_order(new Orders(//新增到訂單資料表
                                 String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                                 Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
                                 Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
                                 String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                         ));
-                        Log.d("20180125001",String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())));
+                        //for(int i2=0;i2<dao.get_act_order_List_filter(i2).size();i2++){
 
+                        //}
+                        Log.d("TEEWGDHFJE!!!!!",String.valueOf(id));
+                        Log.d("TEEWGDHFJE!!!!!",String.valueOf(dao.get_order_List().get(id)._id_order));
+
+                        dao.delete_order_act(dao.get_order_List().get(id)._id_order);
                         for (int i1=0;i1<chks.length;i1++)
                         {
                             if (chks[i1])
                             {
                                 dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
-                                        get_Newest_OrderID,
+                                        dao.get_order_List().get(id)._id_order,
                                         dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1)._id,
                                         dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
                                         dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())
 
                                 ));
-                                Log.d("20180125001",String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())));
-
                             }
                         }
 //                StringBuilder sb = new StringBuilder();
@@ -183,23 +199,15 @@ public class OrderRecord_page extends AppCompatActivity {
 //
 //                    }
 //                }
-                        Log.d("test20180125",String.valueOf(chks.length));
-                        Log.d("test20180125",String.valueOf(chks.length));
-                        Log.d("test20180125",String.valueOf(my_act_list.size()));
-
-                        Toast.makeText(OrderRecord_page.this,"新增成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(OrderRecord_page.this,"修改成功",Toast.LENGTH_SHORT).show();
                         onResume();
                     }
-
                 });
-
                 builderedit.setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
                     }
                 });
-
                builderedit.show();
             }
         });
@@ -301,8 +309,8 @@ public class OrderRecord_page extends AppCompatActivity {
                         Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
                         String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                 ));
-                Log.d("20180125001",String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio*Integer.valueOf(tv2.getText().toString())));
-
+                //上面一整段程式碼(新增進資料表)執行完會回傳一個long，我再用long get_Newest_OrderID去接收他，這個數就是新增資料的id
+                //下面再利用這個id作為新增訂單活動資料表的外來鍵
                 for (int i1=0;i1<chks.length;i1++)
                 {
                     if (chks[i1])

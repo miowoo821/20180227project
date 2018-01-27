@@ -25,6 +25,8 @@ public class Order_Act_Point {
         this.Order_Act_ID=Order_Act_ID;
         this.Order_Act=Order_Act;
         this.Order_Act_Point=Order_Act_Point;
-
+    }
+    public Order_Act_Point(String Order_Act){
+        this.Order_Act=Order_Act;
     }
 }
