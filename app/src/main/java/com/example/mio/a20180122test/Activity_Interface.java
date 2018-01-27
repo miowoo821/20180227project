@@ -29,7 +29,7 @@ public interface Activity_Interface {
     public long add_order(Orders orders);
     public ArrayList<Orders> get_order_List_filter(int date);
     public ArrayList<Orders> get_order_List();
-    public Activities get_order(int _id);
+    public Orders get_order(int _id);
     public boolean update_order(Orders orders );
     public boolean delete_order(int _id);
 }

@@ -229,7 +229,17 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     }
 
     @Override
-    public Activities get_order(int _id) {
+    public Orders get_order(int _id) {
+
+        Cursor c=db.query("Order_list", new String[] {"_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"}
+                , "_id=?", new String[]{String.valueOf(_id)}, null, null, null);
+        if(c.moveToFirst()) {
+            Orders orders = new Orders(c.getInt(0), c.getString(1), c.getInt(2),c.getInt(3),c.getString(4));
+            return orders;
+        }
+
+
+
         return null;
     }
 
