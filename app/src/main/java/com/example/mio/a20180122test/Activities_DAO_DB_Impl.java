@@ -138,7 +138,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //            }
 //        }
         Cursor c= db.rawQuery(
-                "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list Where Order_Act_ID=Order_Act_ID_1",null);
+                "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list ",null);
         int total_point=0;
         c.moveToFirst();
         for (int i=0;i<c.getCount();i++){
