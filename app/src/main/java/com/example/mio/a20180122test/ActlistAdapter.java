@@ -69,7 +69,6 @@ public class ActlistAdapter extends BaseAdapter {
         //要比較是要拿活動列表的ID去比才對
        viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(dao.get_activity_List().get(i)._id)));
 
-
         //若先抓第i個位置的view，在抓裡面的ID
 
         Log.d("ADA", String.valueOf(i));

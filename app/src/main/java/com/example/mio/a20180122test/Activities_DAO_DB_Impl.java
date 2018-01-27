@@ -46,7 +46,6 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Activity_Memo",activities.Activity_Memo);
         long id=db.insert("Activities_list",null,cv);
         //加long可以取的最新插入的主鍵欸，不加也可以執行，只是不知道怎麼抓主鍵(原碼db.insert("Activities_list",null,cv);)
-        Log.d("SDFSDFSDFSDFDS",String.valueOf(id));//測試
         return true;
     }
     @Override//以日期作為篩選活動的條件，新增訂單或修改訂單時可自動依據訂單時間跳出符合的活動
@@ -122,7 +121,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     @Override//作加總
     public int get_act_now_point(int Order_Act_ID_1) {
-        //第一個參數從外面傳入一個作為篩選條件的欄位，第二個參數是從外面傳入一個要操作加總的欄位，第三個參數是決定要抓出哪一筆資料的點數加總(只留下某筆資料)
+
+//刪        第一個參數從外面傳入一個作為篩選條件的欄位，第二個參數是從外面傳入一個要操作加總的欄位，第三個參數是決定要抓出哪一筆資料的點數加總(只留下某筆資料)
 
 //        Cursor c= db.rawQuery(
 //                "SELECT Order_Act_ID, SUM(Order_Act_Point) FROM Order_ActPoint_list GROUP BY Order_Act_ID ",null);
@@ -138,17 +138,17 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //            }
 //        }
         Cursor c= db.rawQuery(
-                "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list ",null);
+                "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list where Order_Act_ID="+Order_Act_ID_1,null);
+
         int total_point=0;
         c.moveToFirst();
         for (int i=0;i<c.getCount();i++){
-            if(c.getString(1)==String.valueOf(Order_Act_ID_1)) {
-              total_point = total_point +
-                 get_order(Integer.valueOf(c.getInt(i))).Order_Account / 100 * get_activity(Order_Act_ID_1).Activity_F_Ratio;
-                c.moveToNext();
+            if(  c.getString(1).equals(String.valueOf(Order_Act_ID_1)    )) {
+              total_point=total_point+ ( get_order(Integer.valueOf(c.getInt(0))).Order_Account) * (get_activity(Order_Act_ID_1).Activity_F_Ratio)/100;
+                //不是c.getInt(i)，c.getInt是抓第幾欄，不是第幾筆
             }
+            c.moveToNext();
         }
-
         return total_point;
     }
 
@@ -209,7 +209,6 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         ArrayList<Order_Act_Point> get_order_List_filter=new ArrayList<>();
 
         Cursor c = db.rawQuery("select * from Order_ActPoint_list where Order_ID_="+id,null);
-        Log.d("TEST0127DAO",String.valueOf(c.getCount()));
 //        Cursor c=db.query("Activities_list", new String[] {
 //                "_id", "Activity_Name", "Activity_S_D","Activity_E_D","Activity_F_S_D","Activity_F_E_D","Activity_F_Limited","Activity_F_Ratio","Activity_Memo"},
 //                null,null, null, null, "_id DESC");
@@ -238,7 +237,6 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         cv.put("Order_Memo",orders.Order_Memo);
         long id=db.insert("Order_list",null,cv);//前面加個long 就可以用變數取得主鍵欸
 
-        Log.d("SDFSDFSDFSDFDS",String.valueOf(id));
         return  id;
     }
 
