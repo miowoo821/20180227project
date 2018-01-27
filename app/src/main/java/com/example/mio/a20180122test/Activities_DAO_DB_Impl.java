@@ -149,7 +149,13 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
             }
             c.moveToNext();
         }
-        return total_point;
+
+        if (total_point>get_activity(Order_Act_ID_1).Activity_F_Limited){
+            return get_activity(Order_Act_ID_1).Activity_F_Limited;
+        }
+        else {
+            return total_point;
+        }
     }
 
 
