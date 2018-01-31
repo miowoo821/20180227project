@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@android:drawable/bottom_bar"
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/act_order_item_date"
@@ -19,7 +21,7 @@
         android:id="@+id/act_order_item_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/act_order_item_date"
         app:layout_constraintTop_toTopOf="@+id/act_order_item_date" />
@@ -28,7 +30,7 @@
         android:id="@+id/act_order_item_normal_point"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/act_order_item_account"
         app:layout_constraintTop_toTopOf="@+id/act_order_item_account" />
@@ -37,7 +39,7 @@
         android:id="@+id/act_order_item_memo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="32dp"
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/act_order_item_normal_point"
         app:layout_constraintTop_toTopOf="@+id/act_order_item_normal_point" />
