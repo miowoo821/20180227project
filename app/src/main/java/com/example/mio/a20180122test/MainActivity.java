@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Order_Act_List_Adapter adapter;
     boolean chks[];
     public static Activity_Interface dao;
+    ListView lv;
     ListView lv3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgbtn.setOnClickListener(this);
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
+
+        dao=new Activities_DAO_DB_Impl(this);
+        ArrayList my_act_list=new ArrayList();
+        my_act_list=dao.get_activity_List();
+        ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list);
+
+        lv=(ListView)findViewById(R.id.listview);
+        Log.d("LV到底是甚麼呢：","答案是"+lv);
+        lv.setAdapter(adapter1);
+
     }
 
     @Override

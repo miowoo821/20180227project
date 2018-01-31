@@ -6,14 +6,19 @@
     android:layout_height="match_parent"
     tools:context="com.example.mio.a20180122test.MainActivity">
 
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_red_dark" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <CalendarView
             android:id="@+id/calendarView"
@@ -21,135 +26,120 @@
             android:layout_height="wrap_content" />
 
         <LinearLayout
+            android:id="@+id/test00001"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="350dp">
+            app:layout_constraintStart_toStartOf="parent">
 
-            <ListView
-                android:id="@+id/listview"
+            <LinearLayout
+                android:id="@+id/linear_switch"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-    </LinearLayout>
+                <ImageButton
+                    android:id="@+id/img_switch"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/change_1" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:baselineAligned="false"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/background_light"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:text="切換帳號"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_orderrecord"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linear_orderrecord"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <!-- 通过设置 ImageButton  android:clickable="false" 属性 ; 使其 没有点击的属性,不和 LinearLayout抢占点击事件 -->
+                <!-- 通过设置 ImageButton  android:clickable="false" 属性 ; 使其 没有点击的属性,不和 LinearLayout抢占点击事件 -->
 
-            <ImageButton
-                android:id="@+id/img_orderrecord"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:clickable="false"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                <ImageButton
+                    android:id="@+id/img_orderrecord"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/order_record" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="訂單紀錄"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="訂單紀錄"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_activityentry"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linear_activityentry"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_activityentry"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:clickable="false"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                <ImageButton
+                    android:id="@+id/img_activityentry"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_launcher_background"
+                    app:srcCompat="@drawable/ic_launcher_background" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="活動登錄"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活動登錄"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linear_switch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/linner_index"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/img_switch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:clickable="false"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:srcCompat="@drawable/ic_launcher_background" />
+                <ImageButton
+                    android:id="@+id/img_index"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@android:color/transparent"
+                    android:clickable="false"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ic_launcher_background" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="切換"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="樂天首頁"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linner_index"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/img_index"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@android:color/transparent"
-                android:clickable="false"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_launcher_background"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="樂天首頁"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
         </LinearLayout>
 
     </LinearLayout>
