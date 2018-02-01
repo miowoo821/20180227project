@@ -71,11 +71,11 @@ public class ActlistAdapter extends BaseAdapter {
 
         //若先抓第i個位置的view，在抓裡面的ID
 
-        Log.d("ADA", String.valueOf(i));
-        Log.d("ADAPTER0", String.valueOf(dao.get_order_act_list().get(0).Order_ID));
-        Log.d("ADAPTER1", String.valueOf(dao.get_order_act_list().get(1).Order_ID));
-        Log.d("ADAPTER2", String.valueOf(dao.get_order_act_list().get(2).Order_ID));
-        Log.d("ADAPTER", String.valueOf(dao.get_order_act_list().get(i).Order_Act_ID));
+//        Log.d("ADA", String.valueOf(i));
+//        Log.d("ADAPTER0", String.valueOf(dao.get_order_act_list().get(0).Order_ID));
+//        Log.d("ADAPTER1", String.valueOf(dao.get_order_act_list().get(1).Order_ID));
+//        Log.d("ADAPTER2", String.valueOf(dao.get_order_act_list().get(2).Order_ID));
+//        Log.d("ADAPTER", String.valueOf(dao.get_order_act_list().get(i).Order_Act_ID));
         return view;
     }
     static class ViewHolder{
