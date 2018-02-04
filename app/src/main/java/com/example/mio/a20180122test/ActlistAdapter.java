@@ -60,6 +60,7 @@ public class ActlistAdapter extends BaseAdapter {
         {
             viewHolder=(ViewHolder)view.getTag();
         }
+        Log.d("ADAPTER0", String.valueOf(viewHolder));
         viewHolder.tv1.setText(my_act_list.get(i).Activity_Name);
        viewHolder.tv2.setText(String.valueOf(my_act_list.get(i).Activity_F_Limited));
 
@@ -82,6 +83,6 @@ public class ActlistAdapter extends BaseAdapter {
         TextView tv1;
         TextView tv2;
         TextView tv3;
-
     }
+
 }

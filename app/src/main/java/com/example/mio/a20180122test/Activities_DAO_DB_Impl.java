@@ -176,6 +176,17 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
     }
 
+    @Override
+    public Cursor get_activity_date(int date) {
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+        db=my_db_helper.getWritableDatabase();
+        //ArrayList<Activities> get_activity_date=new ArrayList<>();
+        Cursor c = db.rawQuery("select * from Activities_list where Activity_F_S_D<="+date+" and Activity_F_E_D>="+date,null);
+
+        return c;
+    }
+
+
     //----------Order_Act_Point.java--------------------------------------------------------------------
     @Override//新增訂單以及修改訂單時都會取用訂單活動表的新增功能
     public boolean add_order_act(Order_Act_Point order_act_point) {
