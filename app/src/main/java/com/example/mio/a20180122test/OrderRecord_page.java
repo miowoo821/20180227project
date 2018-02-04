@@ -2,6 +2,7 @@ package com.example.mio.a20180122test;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -27,7 +29,8 @@ import com.example.mio.a20180122test.data.Orders;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class OrderRecord_page extends AppCompatActivity {
+public class OrderRecord_page extends AppCompatActivity implements View.OnClickListener {
+    ImageButton imgbtn;
     String  actd;
     ListView lv;
     act_order_item_Adapter adapter;//給訂單列表用的
@@ -46,6 +49,14 @@ public class OrderRecord_page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_record_page);
+        imgbtn=(ImageButton) findViewById(R.id.imageButton);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.img_activityentry);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.img_switch);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.img_index);
+        imgbtn.setOnClickListener(this);
 
         dao=new Activities_DAO_DB_Impl(this);//記得NEW他
 
@@ -206,6 +217,28 @@ public class OrderRecord_page extends AppCompatActivity {
                builderedit.show();
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.imageButton:
+
+                finish();
+
+                break;
+            case R.id.img_activityentry:
+                Intent it2=new Intent(OrderRecord_page.this,Activity_list.class);
+                finish();
+                startActivity(it2);
+                break;
+            case R.id.img_switch:
+                Toast.makeText(OrderRecord_page.this, "Test3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.img_index:
+                Toast.makeText(OrderRecord_page.this, "Test4", Toast.LENGTH_SHORT).show();
+                break;
+        }
     }
 
     @Override

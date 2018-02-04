@@ -591,7 +591,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //setYearMonthDay();
         //setCalendar(year,month,day);
-        checkDatabaseNotes();
+       // checkDatabaseNotes();
         super.onResume();
     }
 

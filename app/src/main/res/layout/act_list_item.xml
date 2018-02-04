@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
+    android:background="?attr/actionModeBackground"
+
     android:clipToPadding="false"
     android:padding="5dp">
 
@@ -16,6 +17,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/activity_name"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,6 +29,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/act_list_feedback_limited"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+
         app:layout_constraintStart_toEndOf="@+id/AdapterActList_Name"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +41,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/act_list_feedback_now"
         android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

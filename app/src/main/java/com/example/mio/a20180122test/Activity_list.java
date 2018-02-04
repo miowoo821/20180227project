@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Activity_list extends AppCompatActivity {
-
+public class Activity_list extends AppCompatActivity implements View.OnClickListener{
+    ImageButton imgbtn;
     public static Activity_Interface dao;
     String  actd;
     ListView lv2;
@@ -37,6 +38,14 @@ public class Activity_list extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
+        imgbtn=(ImageButton) findViewById(R.id.img_orderrecord);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.imageButton);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.img_switch);
+        imgbtn.setOnClickListener(this);
+        imgbtn=(ImageButton) findViewById(R.id.img_index);
+        imgbtn.setOnClickListener(this);
 
         dao=new Activities_DAO_DB_Impl(this);//記得NEW他
 
@@ -55,11 +64,33 @@ public class Activity_list extends AppCompatActivity {
                 Log.d("TESTTTTTTTTTTTTT",String.valueOf(dao.get_activity_List().get(i)));
                 it.putExtra("position",dao.get_activity_List().get(i)._id);
                 //it.putExtra("position",i+1);//直接給數字不法抓到準確的id，因為有時候id不等於位置(順序)
-
                 startActivity(it);
             }
         });
     }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.img_orderrecord:
+                Intent it=new Intent(Activity_list.this,OrderRecord_page.class);
+                finish();
+                startActivity(it);
+                break;
+            case R.id.imageButton:
+                //Intent it2=new Intent(Activity_list.this,MainActivity.class);
+                finish();
+                //startActivity(it2);
+                break;
+            case R.id.img_switch:
+                Toast.makeText(Activity_list.this, "Test3", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.img_index:
+                Toast.makeText(Activity_list.this, "Test4", Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.newconsumption,menu);
