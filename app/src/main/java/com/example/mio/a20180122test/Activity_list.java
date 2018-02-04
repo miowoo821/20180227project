@@ -78,15 +78,19 @@ public class Activity_list extends AppCompatActivity implements View.OnClickList
                 startActivity(it);
                 break;
             case R.id.imageButton:
-                //Intent it2=new Intent(Activity_list.this,MainActivity.class);
                 finish();
-                //startActivity(it2);
                 break;
             case R.id.img_switch:
-                Toast.makeText(Activity_list.this, "Test3", Toast.LENGTH_SHORT).show();
+                Intent it3=new Intent(Activity_list.this,Transfer_Activity.class);
+                finish();
+                startActivity(it3);
+               // Toast.makeText(Activity_list.this, "Test3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.img_index:
-                Toast.makeText(Activity_list.this, "Test4", Toast.LENGTH_SHORT).show();
+                Intent it4=new Intent(Activity_list.this,Rakuten_Activity.class);
+                finish();
+                startActivity(it4);
+                //Toast.makeText(Activity_list.this, "Test4", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

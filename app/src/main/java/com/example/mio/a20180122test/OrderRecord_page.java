@@ -223,9 +223,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.imageButton:
-
                 finish();
-
                 break;
             case R.id.img_activityentry:
                 Intent it2=new Intent(OrderRecord_page.this,Activity_list.class);
@@ -233,10 +231,16 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                 startActivity(it2);
                 break;
             case R.id.img_switch:
-                Toast.makeText(OrderRecord_page.this, "Test3", Toast.LENGTH_SHORT).show();
+                Intent it3=new Intent(OrderRecord_page.this,Transfer_Activity.class);
+                finish();
+                startActivity(it3);
+               // Toast.makeText(OrderRecord_page.this, "Test3", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.img_index:
-                Toast.makeText(OrderRecord_page.this, "Test4", Toast.LENGTH_SHORT).show();
+                Intent it4=new Intent(OrderRecord_page.this,Rakuten_Activity.class);
+                finish();
+                startActivity(it4);
+                //Toast.makeText(OrderRecord_page.this, "Test4", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

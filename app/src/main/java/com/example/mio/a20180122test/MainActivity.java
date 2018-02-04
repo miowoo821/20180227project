@@ -118,19 +118,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.img_orderrecord:
                 Intent it=new Intent(MainActivity.this,OrderRecord_page.class);
-
                 startActivity(it);
                 break;
             case R.id.img_activityentry:
                 Intent it2=new Intent(MainActivity.this,Activity_list.class);
-
                 startActivity(it2);
                 break;
             case R.id.img_switch:
-                Toast.makeText(MainActivity.this, "Test3", Toast.LENGTH_SHORT).show();
+                Intent it3=new Intent(MainActivity.this,Transfer_Activity.class);
+                startActivity(it3);
                 break;
             case R.id.img_index:
-                Toast.makeText(MainActivity.this, "Test4", Toast.LENGTH_SHORT).show();
+                Intent it4=new Intent(MainActivity.this,Rakuten_Activity.class);
+                startActivity(it4);
                 break;
         }
     }
