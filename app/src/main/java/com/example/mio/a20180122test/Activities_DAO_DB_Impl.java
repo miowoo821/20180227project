@@ -27,7 +27,9 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
    String DatabaseName;
 
     public Activities_DAO_DB_Impl(Context context){
+
         this.context=context;
+
 //        My_DB_Helper my_db_helper=new My_DB_Helper(context);
 //        db=my_db_helper.getWritableDatabase();
     }
@@ -36,7 +38,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     @Override
     public boolean add(Activities activities) {
 
-        My_DB_Helper my_db_helper=new My_DB_Helper(context,DatabaseName);
+        My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Activity_Name",activities.Activity_Name);
@@ -280,9 +282,10 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
+        cv.put("User_Name_ID",orders.User_Name_ID);
         cv.put("Order_Date",orders.Order_Date);
         cv.put("Order_Account",orders.Order_Account);
-        cv.put("Order_Normal_Point",orders.Order_Normal_Point);
+       // cv.put("Order_Normal_Point",orders.Order_Normal_Point);
         cv.put("Order_Memo",orders.Order_Memo);
         long id=db.insert("Order_list",null,cv);//前面加個long 就可以用變數取得主鍵欸
         db.close();
@@ -300,14 +303,15 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db=my_db_helper.getWritableDatabase();
         ArrayList<Orders> my_act_list=new ArrayList<>();
         Cursor c=db.query("Order_list", new String[] {
-                        "_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"},
+                        "_id", "User_Name_ID","Order_Date", "Order_Account","Order_Memo"},
                 null,null, null, null, "_id DESC");
 
         if(c.moveToFirst()){
-            Orders s1=new Orders(c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),c.getString(4));
+            Orders s1=new Orders(c.getInt(0),c.getString(1),c.getString(2),c.getInt(3),c.getString(4));
+            //從Cursor裡面抓參數給s1產生Orders物件
             my_act_list.add(s1);
             while (c.moveToNext()){
-                Orders s=new Orders(c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),c.getString(4));
+                Orders s=new Orders(c.getInt(0),c.getString(1),c.getString(2),c.getInt(3),c.getString(4));
                 my_act_list.add(s);
             }
         }
@@ -320,10 +324,11 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 
         My_DB_Helper my_db_helper=new My_DB_Helper(context);
         db=my_db_helper.getWritableDatabase();
-        Cursor c=db.query("Order_list", new String[] {"_id", "Order_Date", "Order_Account","Order_Normal_Point","Order_Memo"}
+        Cursor c=db.query("Order_list", new String[] {
+                        "_id", "User_Name_ID","Order_Date", "Order_Account","Order_Memo"}
                 , "_id=?", new String[]{String.valueOf(_id)}, null, null, null);
         if(c.moveToFirst()) {
-            Orders orders = new Orders(c.getInt(0), c.getString(1), c.getInt(2),c.getInt(3),c.getString(4));
+            Orders orders = new Orders(c.getString(1),c.getString(2),c.getInt(3),c.getString(4));
             return orders;
         }
         db.close();
@@ -338,7 +343,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         ContentValues cv = new ContentValues();
         cv.put("Order_Date", orders.Order_Date);
         cv.put("Order_Account", orders.Order_Account);
-        cv.put("Order_Normal_Point", orders.Order_Normal_Point);
+       // cv.put("Order_Normal_Point", orders.Order_Normal_Point);
         cv.put("Order_Memo", orders.Order_Memo);
         db.update("Order_list", cv, "_id=?", new String[] {String.valueOf(orders._id_order)});//
 

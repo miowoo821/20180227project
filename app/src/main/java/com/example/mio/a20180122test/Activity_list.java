@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.mio.a20180122test.MainActivity.Name_DAO;
+
 public class Activity_list extends AppCompatActivity implements View.OnClickListener{
     ImageButton imgbtn;
     public static Activity_Interface dao;

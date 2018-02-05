@@ -32,6 +32,7 @@ public class My_DB_Helper_account extends SQLiteOpenHelper {
         ContentValues cv=new ContentValues();
         cv.put("Account_Name","DEFAULT");
         db.insert("Account_list",null,cv);
+        db.close();
     }
 
     @Override

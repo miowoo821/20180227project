@@ -29,6 +29,8 @@ import com.example.mio.a20180122test.data.Orders;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import static com.example.mio.a20180122test.MainActivity.Name_DAO;
+
 public class OrderRecord_page extends AppCompatActivity implements View.OnClickListener {
     ImageButton imgbtn;
     String  actd;
@@ -44,6 +46,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
     private int mYear, mMonth, mDay;
     ListView lv3;
     Orders orders;
+    String DatabaseName;
     int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
 
+        //DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
         dao=new Activities_DAO_DB_Impl(this);//記得NEW他
 
         my_act_list=new ArrayList();//記得NEW他
@@ -85,9 +89,13 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                 orders=OrderRecord_page.dao.get_order(dao.get_order_List().get(i)._id_order);
 
                 tv1.setText(String.valueOf(orders.Order_Date));
-                tv2.setText(String.valueOf(orders.Order_Normal_Point));
+                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Date));
+                tv2.setText(String.valueOf(Integer.valueOf(orders.Order_Account/100)));
+                Log.d("FFF","orders=============="+String.valueOf(Integer.valueOf(orders.Order_Account/100)));
                 ed1.setText(String.valueOf(orders.Order_Account));
+                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Account));
                 ed2.setText(String.valueOf(orders.Order_Memo));
+                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Memo));
 
                 dao=new Activities_DAO_DB_Impl(OrderRecord_page.this);
 
@@ -174,9 +182,10 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dao.update_order(new Orders(//新增到訂單資料表
+                                String.valueOf("id"),//
                                 String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                                 Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
-                                Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
+
                                 String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                         ),id,
                                 Integer.valueOf(tv1.getText().toString()),//tv1的值
@@ -336,9 +345,9 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 long get_Newest_OrderID=dao.add_order(new Orders(//新增到訂單資料表
+                        String.valueOf("user"),//使用者id
                         String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                         Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
-                        Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
                         String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                 ));
                 //上面一整段程式碼(新增進資料表)執行完會回傳一個long，我再用long get_Newest_OrderID去接收他，這個數就是新增資料的id

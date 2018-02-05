@@ -24,6 +24,12 @@ public class Transfer_Activity extends AppCompatActivity implements View.OnClick
         imgbtn.setOnClickListener(this);
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
+
+        //****************************
+
+        GlobalVariable User = (GlobalVariable)getApplicationContext();
+        User.set_GlobalVariable_User_Account("123");
+        //****************************
     }
 
     @Override

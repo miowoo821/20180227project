@@ -12,6 +12,8 @@ import com.example.mio.a20180122test.data.Activities;
 
 import java.util.ArrayList;
 
+import static com.example.mio.a20180122test.MainActivity.Name_DAO;
+
 /**
  * Created by mio on 2018/1/23.
  */
@@ -46,6 +48,7 @@ public class ActlistAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         ViewHolder viewHolder;
+       // String DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
         dao=new Activities_DAO_DB_Impl(context);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
         if(view==null){
             LayoutInflater inflater = LayoutInflater.from(context);

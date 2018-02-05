@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView tv1;
     Button btn1,btn2;
-
+    GlobalVariable User;
     //*******************************************
     public static Account_DAO_DB Name_DAO;
     String DatabaseName;
@@ -79,9 +79,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
 
-        Name_DAO=new Account_DAO_DB(this);
-        DatabaseName=Name_DAO.get_account()
-        dao=new Activities_DAO_DB_Impl(this,DatabaseName);
+
+        User = (GlobalVariable)getApplicationContext();
+
+        String Word=User.get_GlobalVariable_User_Account();
+        Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
+//        Name_DAO=new Account_DAO_DB(this);
+//        DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
+        dao=new Activities_DAO_DB_Impl(this);
         ArrayList my_act_list=new ArrayList();
         my_act_list=dao.get_activity_List();
         ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list);
@@ -540,9 +545,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     long get_Newest_OrderID = dao.add_order(new Orders(//新增到訂單資料表
+                            String.valueOf("USERID"),//tv2=New_order_N_point
                             String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                             Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
-                            Integer.valueOf(tv2.getText().toString()),//tv2=New_order_N_point
                             String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                     ));
                     Log.d("20180125001", String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio * Integer.valueOf(tv2.getText().toString())));
@@ -588,7 +593,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     protected void onResume() {
-
+        Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
         tv1.setText(String.valueOf(year+"年"+month+"月"));
 //        start_Day_of_the_week=0;
 //        Days_After_2000_1_1=0;
