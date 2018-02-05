@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.mio.a20180122test.data.Account_DAO_DB;
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
@@ -62,7 +63,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btn1,btn2;
 
     //*******************************************
-
+    public static Account_DAO_DB Name_DAO;
+    String DatabaseName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
 
-        dao=new Activities_DAO_DB_Impl(this);
+        Name_DAO=new Account_DAO_DB(this);
+        DatabaseName=Name_DAO.get_account()
+        dao=new Activities_DAO_DB_Impl(this,DatabaseName);
         ArrayList my_act_list=new ArrayList();
         my_act_list=dao.get_activity_List();
         ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list);

@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class Rakuten_Activity extends AppCompatActivity implements View.OnClickListener{
     ImageButton imgbtn;
+    WebView wv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,11 @@ public class Rakuten_Activity extends AppCompatActivity implements View.OnClickL
         imgbtn.setOnClickListener(this);
         imgbtn=(ImageButton) findViewById(R.id.imageButton);
         imgbtn.setOnClickListener(this);
+        wv=findViewById(R.id.webview);
+        wv.setWebChromeClient(new WebChromeClient());
+        wv.setWebViewClient(new WebViewClient());
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.loadUrl("https://www.rakuten.com.tw/event/");
     }
     @Override
     public void onClick(View view) {
@@ -51,7 +60,17 @@ public class Rakuten_Activity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
-
+public void click_pre_page(View v){
+    if(wv.canGoBack()){
+        wv.goBack();
+    }
+}
+public void click_next_page(View v){
+    if(wv.canGoForward()){
+        wv.goForward();
+    }
+}
+    public void click_event_index_page(View v){
+        wv.loadUrl("https://www.rakuten.com.tw/event/");
+    }
 }

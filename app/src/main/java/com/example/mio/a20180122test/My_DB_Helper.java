@@ -9,11 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 
 public class My_DB_Helper extends SQLiteOpenHelper {
-    final static String DB_NAME = "Activities6.sqlite";
+    //static String databasename="Default";
+    //final static String DB_NAME = databasename+".sqlite";
     final static int VERSION = 1;
 
-    public My_DB_Helper(Context context) {
-        super(context, DB_NAME, null, VERSION);
+    public My_DB_Helper(Context context, String databasename) {
+
+        super(context, databasename, null, VERSION);
     }
 
     @Override

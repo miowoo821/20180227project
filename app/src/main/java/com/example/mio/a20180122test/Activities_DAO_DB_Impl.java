@@ -24,6 +24,7 @@ import java.util.Date;
 public class Activities_DAO_DB_Impl implements Activity_Interface {
     Context context;
     SQLiteDatabase db;
+   String DatabaseName;
 
     public Activities_DAO_DB_Impl(Context context){
         this.context=context;
@@ -34,7 +35,8 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     //----------------------Activities.java---------------------------------------------------------
     @Override
     public boolean add(Activities activities) {
-        My_DB_Helper my_db_helper=new My_DB_Helper(context);
+
+        My_DB_Helper my_db_helper=new My_DB_Helper(context,DatabaseName);
         db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Activity_Name",activities.Activity_Name);
