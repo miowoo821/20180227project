@@ -61,10 +61,10 @@ public class Account_DAO_DB {
                 "_id","User_Name"},
                 null,null,null, null, null );
         if(c.moveToFirst()) {
-            Accounts s1 = new Accounts(c.getString(1));
+            Accounts s1 = new Accounts(c.getInt(0) ,c.getString(1));
             A_List.add(s1);
             while (c.moveToNext()) {
-                Accounts s = new Accounts(c.getString(1));
+                Accounts s = new Accounts(c.getInt(0) ,c.getString(1));
                 A_List.add(s);
             }
 

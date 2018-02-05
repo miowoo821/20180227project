@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,6 +63,18 @@ public class Transfer_Activity extends AppCompatActivity implements View.OnClick
         account_list_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent it=new Intent(Transfer_Activity.this,account_detail.class);
+                //adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
+                Log.d("TESTTTTTTTTTTTTT",String.valueOf(ADAO.get_Account_list().get(i)));
+                it.putExtra("position",ADAO.get_Account_list().get(i).ID);
+                //it.putExtra("position",i+1);//直接給數字不法抓到準確的id，因為有時候id不等於位置(順序)
+                startActivity(it);
+
+            }
+        });
+        account_list_lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                 String Change_DB_Name=ADAO.get_Account_list().get(i).Account_Name;
                 //**********痊癒變數******************
@@ -69,9 +82,9 @@ public class Transfer_Activity extends AppCompatActivity implements View.OnClick
                 User.set_GlobalVariable_User_Account(Change_DB_Name);
                 //***********全域變數*****************
                 Toast.makeText(Transfer_Activity.this,"當前帳號修改為"+Change_DB_Name,Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
-
 
     }
 
@@ -80,6 +93,7 @@ public class Transfer_Activity extends AppCompatActivity implements View.OnClick
         getMenuInflater().inflate(R.menu.switch_menu,menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
