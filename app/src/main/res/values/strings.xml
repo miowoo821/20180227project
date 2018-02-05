@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">樂天超級點數計算機</string>
+    <string name="app_name">樂天點數紀錄器</string>
     <string name="expenditure">訂單金額</string>
+    <string name="acc_switch">切換帳號</string>
     <string name="edit">修改</string>
     <string name="ID">ID</string>
     <string name="date">日期</string>

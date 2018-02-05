@@ -48,6 +48,9 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
     Orders orders;
     String DatabaseName;
     int id;
+
+    GlobalVariable User;
+    String GlobalVariable_User_Account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +64,17 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
 
+
+        //***********全域變數*****************
+        User = (GlobalVariable) getApplicationContext();//全域變數(資料庫的名字)
+        GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
+        //***********全域變數*****************
         //DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
-        dao=new Activities_DAO_DB_Impl(this);//記得NEW他
+        dao=new Activities_DAO_DB_Impl(this,GlobalVariable_User_Account);//記得NEW他
 
         my_act_list=new ArrayList();//記得NEW他
         my_act_list=dao.get_order_List();//記得丟資料進去
-        adapter=new act_order_item_Adapter(OrderRecord_page.this,my_act_list);
+        adapter=new act_order_item_Adapter(OrderRecord_page.this,my_act_list,GlobalVariable_User_Account);
 
         lv=(ListView)findViewById(R.id.listView);
         lv.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
@@ -97,7 +105,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                 ed2.setText(String.valueOf(orders.Order_Memo));
                 Log.d("FFF","orders=============="+String.valueOf(orders.Order_Memo));
 
-                dao=new Activities_DAO_DB_Impl(OrderRecord_page.this);
+                dao=new Activities_DAO_DB_Impl(OrderRecord_page.this,GlobalVariable_User_Account);
 
                 my_order_act_list_1=new ArrayList();
                 my_order_act_list_1=dao.get_act_order_List_filter(dao.get_order_List().get(i)._id_order);
@@ -147,7 +155,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                                 String str = s1+s2+s3;
                                 tv1.setText(str);
 
-                                dao=new Activities_DAO_DB_Impl(OrderRecord_page.this);
+                                dao=new Activities_DAO_DB_Impl(OrderRecord_page.this,GlobalVariable_User_Account);
                                 my_order_act_list=new ArrayList();
                                 my_order_act_list=dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString()));
 
@@ -309,7 +317,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                         String str = s1+s2+s3;
                         tv1.setText(str);
 
-                        dao=new Activities_DAO_DB_Impl(OrderRecord_page.this);
+                        dao=new Activities_DAO_DB_Impl(OrderRecord_page.this,GlobalVariable_User_Account);
                         my_order_act_list=new ArrayList();
                         my_order_act_list=dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString()));
 
@@ -345,7 +353,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 long get_Newest_OrderID=dao.add_order(new Orders(//新增到訂單資料表
-                        String.valueOf("user"),//使用者id
+                        String.valueOf(GlobalVariable_User_Account),//使用者id
                         String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                         Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
                         String.valueOf(ed2.getText().toString())//ed2=New_order_memo
@@ -403,7 +411,7 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
     public void refreshData(){//重抓，會不會沒效率呢？
 
         my_act_list=dao.get_order_List();//記得丟資料進去
-        adapter=new act_order_item_Adapter(OrderRecord_page.this,my_act_list);
+        adapter=new act_order_item_Adapter(OrderRecord_page.this,my_act_list,GlobalVariable_User_Account);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();//一定要加這個
     }

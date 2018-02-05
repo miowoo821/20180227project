@@ -36,6 +36,8 @@ public class Activity_list extends AppCompatActivity implements View.OnClickList
     ActlistAdapter adapter;
     ArrayList my_act_list;
 
+    GlobalVariable User;
+    String GlobalVariable_User_Account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,11 +51,16 @@ public class Activity_list extends AppCompatActivity implements View.OnClickList
         imgbtn=(ImageButton) findViewById(R.id.img_index);
         imgbtn.setOnClickListener(this);
 
-        dao=new Activities_DAO_DB_Impl(this);//記得NEW他
+        //***********全域變數*****************
+         User = (GlobalVariable) getApplicationContext();//全域變數(資料庫的名字)
+        GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
+        //***********全域變數*****************
+
+        dao=new Activities_DAO_DB_Impl(this,GlobalVariable_User_Account);//記得NEW他
 
         my_act_list=new ArrayList();//記得NEW他
         my_act_list=dao.get_activity_List();//記得丟資料進去
-        adapter=new ActlistAdapter(Activity_list.this,my_act_list);
+        adapter=new ActlistAdapter(Activity_list.this,my_act_list,GlobalVariable_User_Account);
         Log.d("TESTTTTTTTTTTTTT",String.valueOf(my_act_list));
         lv2=(ListView)findViewById(R.id.listView2);
         lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
@@ -339,7 +346,7 @@ public class Activity_list extends AppCompatActivity implements View.OnClickList
     public void refreshData(){//重抓，會不會沒效率呢？
 
         my_act_list=dao.get_activity_List();//記得丟資料進去
-        adapter=new ActlistAdapter(Activity_list.this,my_act_list);
+        adapter=new ActlistAdapter(Activity_list.this,my_act_list,GlobalVariable_User_Account);
         lv2.setAdapter(adapter);
         adapter.notifyDataSetChanged();//一定要加這個
     }

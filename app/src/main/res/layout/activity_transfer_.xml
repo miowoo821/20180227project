@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_red_dark"
     tools:context="com.example.mio.a20180122test.Transfer_Activity">
 
 
@@ -16,7 +17,37 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical"></LinearLayout>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/account_list_title"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#610000"
+                android:padding="10dp"
+
+
+                android:text="@string/acc_switch"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="@android:color/background_light"
+                app:layout_constraintBottom_toTopOf="@+id/listView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ListView
+                android:id="@+id/account_list_lv"
+                style="@style/Widget.AppCompat.Light.ListView.DropDown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:background="#ffffff"
+
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

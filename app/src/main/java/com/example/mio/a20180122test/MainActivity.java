@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,11 +62,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView tv1;
     Button btn1,btn2;
-    GlobalVariable User;
     //*******************************************
     public static Account_DAO_DB Name_DAO;
-    String DatabaseName;
-
+    //String DatabaseName;
+    GlobalVariable User;
+    String GlobalVariable_User_Account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,16 +81,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgbtn.setOnClickListener(this);
 
 
-        User = (GlobalVariable)getApplicationContext();
+        //***********全域變數*****************
+        User = (GlobalVariable) getApplicationContext();//全域變數(資料庫的名字)
+        GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
+        //***********全域變數*****************
 
-        String Word=User.get_GlobalVariable_User_Account();
         Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
 //        Name_DAO=new Account_DAO_DB(this);
 //        DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
-        dao=new Activities_DAO_DB_Impl(this);
+        dao=new Activities_DAO_DB_Impl(this,GlobalVariable_User_Account);
         ArrayList my_act_list=new ArrayList();
         my_act_list=dao.get_activity_List();
-        ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list);
+        ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list,GlobalVariable_User_Account);
 
         lv=(ListView)findViewById(R.id.listview);
         Log.d("LV到底是甚麼呢：","答案是"+lv);
@@ -507,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             String str = s1 + s2 + s3;
                             tv1.setText(str);
 
-                            dao = new Activities_DAO_DB_Impl(MainActivity.this);
+                            dao = new Activities_DAO_DB_Impl(MainActivity.this,GlobalVariable_User_Account);
                             my_order_act_list = new ArrayList();
                             my_order_act_list = dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString()));
 
@@ -545,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     long get_Newest_OrderID = dao.add_order(new Orders(//新增到訂單資料表
-                            String.valueOf("USERID"),//tv2=New_order_N_point
+                            String.valueOf(GlobalVariable_User_Account),//tv2=New_order_N_point
                             String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                             Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
                             String.valueOf(ed2.getText().toString())//ed2=New_order_memo
@@ -593,6 +596,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     @Override
     protected void onResume() {
+
         Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
         tv1.setText(String.valueOf(year+"年"+month+"月"));
 //        start_Day_of_the_week=0;
@@ -600,7 +604,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //setYearMonthDay();
         //setCalendar(year,month,day);
-       // checkDatabaseNotes();
+        checkDatabaseNotes();//一直跑超LAG
         super.onResume();
     }
 
@@ -681,6 +685,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             someDateText.setText(Integer.toString(i));//設定TextView
 
             someDateText.setBackgroundColor(0xffffffff);
+//            Drawable d = getResources().getDrawable(R.drawable.bg_2);
+//            someDateText.setBackground(d);
             someDateText.setTextColor(0xff000000);
             someDateText.setTextSize(8);
             if(i==day){
@@ -715,6 +721,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     //      Log.d("MyLog", "使用ID為" + resID);
                     TextView someDateText = (TextView) findViewById(resID);
                     someDateText.setBackgroundColor(0xffffffff);
+//                    Drawable d = getResources().getDrawable(R.drawable.bg_2);
+//                    someDateText.setBackground(d);
                     someDateText.setTextColor(0xFF8B8B8B);
 
                     TextView tv1;
@@ -744,6 +752,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     TextView someDateText = (TextView) findViewById(resID);
                     someDateText.setText(Integer.toString(i));
                     someDateText.setBackgroundColor(0xffffffff);
+//                    Drawable d = getResources().getDrawable(R.drawable.bg_2);
+//                    someDateText.setBackground(d);
                     someDateText.setTextColor(0xFF8B8B8B);
                     textDateCountLast--;
                 }
@@ -771,6 +781,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView someDateText = (TextView) findViewById(resID);
             someDateText.setText(Integer.toString(newMonthDate));
             someDateText.setBackgroundColor(0xffffffff);
+//            Drawable d = getResources().getDrawable(R.drawable.bg_2);
+//            someDateText.setBackground(d);
             someDateText.setTextColor(0xFF8B8B8B);
             newMonthDate++;
         }
@@ -926,6 +938,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         rawString = rawString.substring(0, 10);//假設字串長度大於4就只抓從頭開始到第四個字
                     }
                     noteText.setText(rawString);//最後填入剛剛findviewbyid的noteText
+//                    Drawable d = getResources().getDrawable(R.drawable.bg_3);
+//                    noteText.setBackground(d);
                 }
             }
         }

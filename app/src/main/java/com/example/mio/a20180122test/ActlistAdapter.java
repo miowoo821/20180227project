@@ -22,11 +22,12 @@ public class ActlistAdapter extends BaseAdapter {
     Context context;
     ArrayList<Activities> my_act_list;
     public static Activity_Interface dao;
+    String GlobalVariable_User_Account;
 
-    public ActlistAdapter(Context context,ArrayList<Activities> my_act_list){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
+    public ActlistAdapter(Context context,ArrayList<Activities> my_act_list,String GlobalVariable_User_Account){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
         this.context=context;
         this.my_act_list=my_act_list;
-
+        this.GlobalVariable_User_Account=GlobalVariable_User_Account;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class ActlistAdapter extends BaseAdapter {
 
         ViewHolder viewHolder;
        // String DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
-        dao=new Activities_DAO_DB_Impl(context);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
+        dao=new Activities_DAO_DB_Impl(context,GlobalVariable_User_Account);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
         if(view==null){
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.act_list_item, null);

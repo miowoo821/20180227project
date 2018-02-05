@@ -22,11 +22,13 @@ import static com.example.mio.a20180122test.MainActivity.Name_DAO;
 public class act_order_item_Adapter extends BaseAdapter {
     Context context;
     ArrayList<Orders> my_act_list;
+    String GlobalVariable_User_Account;
     public static Activity_Interface dao;
 
-    public act_order_item_Adapter(Context context,ArrayList<Orders> my_act_list){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
+    public act_order_item_Adapter(Context context,ArrayList<Orders> my_act_list,String GlobalVariable_User_Account){//建構式裡的兩個參數代表要新增這個物件必須要給這兩個類型的參數
         this.context=context;
         this.my_act_list=my_act_list;
+        this.GlobalVariable_User_Account=GlobalVariable_User_Account;
 
     }
     @Override
@@ -49,11 +51,11 @@ public class act_order_item_Adapter extends BaseAdapter {
 
         act_order_item_Adapter.ViewHolder viewHolder;
 //        String DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
-        dao=new Activities_DAO_DB_Impl(context);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
+        dao=new Activities_DAO_DB_Impl(context,GlobalVariable_User_Account);//直接把外面傳入的context當作參數再傳過去Activities_DAO_DB_Impl
         if(view==null){
             LayoutInflater inflater = LayoutInflater.from(context);
             view = inflater.inflate(R.layout.act_order_item, null);
-            viewHolder = new act_order_item_Adapter.ViewHolder();
+            viewHolder = new act_order_item_Adapter.ViewHolder();//act_order_item_Adapter真的可以去掉拉
             viewHolder.tv1 = view.findViewById(R.id.act_order_item_date);
             viewHolder.tv2 = view.findViewById(R.id.act_order_item_account);
             viewHolder.tv3 = view.findViewById(R.id.act_order_item_normal_point);

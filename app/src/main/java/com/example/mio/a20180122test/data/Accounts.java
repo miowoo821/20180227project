@@ -8,6 +8,7 @@ import android.accounts.Account;
 
 public class Accounts {
     public String Account_Name;
+
     public Accounts(String account_Name){
         this.Account_Name=account_Name;
     }

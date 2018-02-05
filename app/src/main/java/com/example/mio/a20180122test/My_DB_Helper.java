@@ -12,14 +12,16 @@ import com.example.mio.a20180122test.data.My_DB_Helper_account;
  */
 
 public class My_DB_Helper extends SQLiteOpenHelper {
+//    GlobalVariable User = (GlobalVariable)getApplicationContext();//全域變數(資料庫的名字)
+//    User.get_GlobalVariable_User_Account()
 
     static String databasename="Default0";
     final static String DB_NAME = databasename+".sqlite";
     final static int VERSION = 1;
     Context context;
 
-    public My_DB_Helper(Context context ) {
-
+    public My_DB_Helper(Context context,String GlobalVariable_User_Account) {
+        //以全域變數取代DB_NAME
         super(context, DB_NAME, null, VERSION);
         this.context=context;
     }
