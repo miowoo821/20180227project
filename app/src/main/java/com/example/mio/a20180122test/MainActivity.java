@@ -318,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         mYear = c.get(Calendar.YEAR);
                         mMonth = c.get(Calendar.MONTH);
                         mDay = c.get(Calendar.DAY_OF_MONTH);
+                        //日曆主題不同new DatePickerDialog(MainActivity.this,android.R.style.Theme_Holo_Dialog, new DatePickerDialog.OnDateSetListener() {
                         new DatePickerDialog(MainActivity.this,android.R.style.Theme_Holo_Dialog, new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
