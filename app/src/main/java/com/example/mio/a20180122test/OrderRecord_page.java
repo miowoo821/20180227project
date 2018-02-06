@@ -79,6 +79,30 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
         lv=(ListView)findViewById(R.id.listView);
         lv.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid，例如onCreate
 
+        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                AlertDialog.Builder builder_delete=new AlertDialog.Builder(OrderRecord_page.this);//新增一個對話框物件(用來編輯訂單)
+                builder_delete.setTitle("編輯訂單");
+                builder_delete.setMessage("是否要刪除金額為"+dao.get_order_List().get(i).Order_Account+"的資料");
+
+                builder_delete.setPositiveButton("確定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder_delete.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder_delete.show();
+                return true;//這邊改成true就不會啟動短按的事件了欸
+            }
+        });
+
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -97,13 +121,9 @@ public class OrderRecord_page extends AppCompatActivity implements View.OnClickL
                 orders=OrderRecord_page.dao.get_order(dao.get_order_List().get(i)._id_order);
 
                 tv1.setText(String.valueOf(orders.Order_Date));
-                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Date));
                 tv2.setText(String.valueOf(Integer.valueOf(orders.Order_Account/100)));
-                Log.d("FFF","orders=============="+String.valueOf(Integer.valueOf(orders.Order_Account/100)));
                 ed1.setText(String.valueOf(orders.Order_Account));
-                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Account));
                 ed2.setText(String.valueOf(orders.Order_Memo));
-                Log.d("FFF","orders=============="+String.valueOf(orders.Order_Memo));
 
                 dao=new Activities_DAO_DB_Impl(OrderRecord_page.this,GlobalVariable_User_Account);
 

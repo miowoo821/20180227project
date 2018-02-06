@@ -68,7 +68,7 @@ public class act_order_item_Adapter extends BaseAdapter {
         }
         viewHolder.tv1.setText(my_act_list.get(i).Order_Date);
         viewHolder.tv2.setText(String.valueOf(my_act_list.get(i).Order_Account));
-     //   viewHolder.tv3.setText(String.valueOf(my_act_list.get(i).Order_Normal_Point));
+        viewHolder.tv3.setText(String.valueOf(my_act_list.get(i).Order_Account/100));//一般點數
         viewHolder.tv4.setText(String.valueOf(my_act_list.get(i).Order_Memo));
 
         //若先抓第i個位置的view，在抓裡面的ID

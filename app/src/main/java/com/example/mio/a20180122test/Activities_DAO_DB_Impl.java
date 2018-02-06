@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class Activities_DAO_DB_Impl implements Activity_Interface {
     Context context;
-    SQLiteDatabase db;
+    public SQLiteDatabase db;
    String GlobalVariable_User_Account;
 
     public Activities_DAO_DB_Impl(Context context,String GlobalVariable_User_Account){
@@ -186,7 +186,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db=my_db_helper.getWritableDatabase();
         //ArrayList<Activities> get_activity_date=new ArrayList<>();
         Cursor c = db.rawQuery("select * from Activities_list where Activity_F_S_D<="+date+" and Activity_F_E_D>="+date,null);
-
+//這邊不能close，因為要回傳Cursor,要在外面的Cursor用完之後才能關
         return c;
     }
 

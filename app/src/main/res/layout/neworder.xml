@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:layout_editor_absoluteY="81dp">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,10 +69,11 @@
 
         <ListView
             android:id="@+id/listView3"
-            android:layout_width="365dp"
-            android:layout_height="165dp"
+            android:layout_width="369dp"
+            android:layout_height="175dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/tableRow" />
+            app:layout_constraintTop_toBottomOf="@+id/tableRow"
+            tools:layout_editor_absoluteX="-4dp" />
 
         <TableRow
             android:id="@+id/tableRow"
@@ -86,25 +87,26 @@
             app:layout_constraintTop_toBottomOf="@+id/New_order_memo">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="                                           " />
+
+            <TextView
                 android:id="@+id/textView30"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="活動名稱" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="                    " />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="目前回饋" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
         </TableRow>
     </android.support.constraint.ConstraintLayout>
 

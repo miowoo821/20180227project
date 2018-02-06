@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList my_order_act_list;
     Order_Act_List_Adapter adapter;
     boolean chks[];
-    public static Activity_Interface dao;
+    public static Activities_DAO_DB_Impl dao;//從Interface的賦型改成Activities_DAO_DB_Impl
     String  actd;
     ListView lv;
     ListView lv2;
@@ -554,7 +554,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
                             String.valueOf(ed2.getText().toString())//ed2=New_order_memo
                     ));
-                    Log.d("20180125001", String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio * Integer.valueOf(tv2.getText().toString())));
+//                    Log.d("20180125001", String.valueOf(dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(1).Activity_F_Ratio * Integer.valueOf(tv2.getText().toString())));
 
                     for (int i1 = 0; i1 < chks.length; i1++) {
                         if (chks[i1]) {
@@ -690,7 +690,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //            someDateText.setBackground(d);
             someDateText.setTextColor(0xff000000);
             someDateText.setTextSize(8);
-            if(i==day){
+            //下面是標註今天的程式碼
+
+            //**************************************
+            String nowday,nowmonth,nowdate;
+            if(day<10){   nowday="0"+String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+            }else {
+                nowday=String.valueOf(calendar.get(Calendar.DAY_OF_MONTH) );}
+            if(calendar.get(Calendar.MONTH)+1<10){  nowmonth="0"+String.valueOf(calendar.get(Calendar.MONTH)+1);
+            }else {
+                nowmonth=String.valueOf(calendar.get(Calendar.MONTH)+1);}
+            nowdate=String.valueOf(calendar.get(Calendar.YEAR))+nowmonth+nowday;
+            //**************************************
+            //**************************************
+            String Markday,Markmonth,Markdate;
+            if(i<10){   Markday="0"+String.valueOf(i);
+            }else {
+                Markday=String.valueOf(i);}
+            if(month<10){  Markmonth="0"+String.valueOf(month);
+            }else {
+                Markmonth=String.valueOf(month);}
+            Markdate=year+Markmonth+Markday;
+            //**************************************
+
+
+            Log.d("Markdate","Markdate========"+Markdate);
+            Log.d("nowdate","nowdate========"+nowdate);
+
+
+
+            if(Markdate.equals(nowdate)){
                 someDateText.setTextColor(0xffffffff);
                 someDateText.setTextSize(10);
                 //--------粗體要加這兩行-------
@@ -942,6 +971,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    Drawable d = getResources().getDrawable(R.drawable.bg_3);
 //                    noteText.setBackground(d);
                 }
+                noteday.close();
+                dao.db.close();//因為這大段程式碼要用，所以那邊不能close，只能在這邊close(不然太多會當機)
             }
         }
     }
