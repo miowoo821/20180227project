@@ -9,7 +9,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/menu_add_activity"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/notepad_icon"
         android:title="Item"
         app:showAsAction="always" />
 </menu>

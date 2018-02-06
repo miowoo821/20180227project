@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/20180122test.iml" filepath="$PROJECT_DIR$/.idea/20180122test.iml" />
-      <module fileurl="file://C:\android git20171228\20180122test\20180122test.iml" filepath="C:\android git20171228\20180122test\20180122test.iml" />
       <module fileurl="file://C:\Users\mio\AndroidStudioProjects\20180122test\20180122test.iml" filepath="C:\Users\mio\AndroidStudioProjects\20180122test\20180122test.iml" />
+      <module fileurl="file://C:\android git20171228\20180122test\20180122test.iml" filepath="C:\android git20171228\20180122test\20180122test.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

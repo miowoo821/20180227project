@@ -140,7 +140,7 @@
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         android:textAlignment="center"
-                        app:srcCompat="@mipmap/ic_launcher_round" />
+                        app:srcCompat="@drawable/house_icon" />
 
                     <TextView
                         android:id="@+id/textView3"

@@ -686,7 +686,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             someDateText.setText(Integer.toString(i));//設定TextView
 
             someDateText.setBackgroundColor(0xffffffff);
-//            Drawable d = getResources().getDrawable(R.drawable.bg_2);
+//            @android:drawable/editbox_background
+//            Drawable d = getResources().getDrawable(R.drawable.editbox_background);
 //            someDateText.setBackground(d);
             someDateText.setTextColor(0xff000000);
             someDateText.setTextSize(8);
@@ -977,3 +978,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+

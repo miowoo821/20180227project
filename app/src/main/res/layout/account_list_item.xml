@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="3"
-        android:text="TextView"
+        android:text="0"
         android:textAlignment="textEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 </LinearLayout>

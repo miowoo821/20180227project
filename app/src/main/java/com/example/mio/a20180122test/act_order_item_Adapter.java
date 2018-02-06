@@ -58,7 +58,7 @@ public class act_order_item_Adapter extends BaseAdapter {
             viewHolder = new act_order_item_Adapter.ViewHolder();//act_order_item_Adapter真的可以去掉拉
             viewHolder.tv1 = view.findViewById(R.id.act_order_item_date);
             viewHolder.tv2 = view.findViewById(R.id.act_order_item_account);
-            viewHolder.tv3 = view.findViewById(R.id.act_order_item_normal_point);
+            //viewHolder.tv3 = view.findViewById(R.id.act_order_item_normal_point);
             viewHolder.tv4 = view.findViewById(R.id.act_order_item_memo);
             view.setTag(viewHolder);
         }
@@ -68,7 +68,7 @@ public class act_order_item_Adapter extends BaseAdapter {
         }
         viewHolder.tv1.setText(my_act_list.get(i).Order_Date);
         viewHolder.tv2.setText(String.valueOf(my_act_list.get(i).Order_Account));
-        viewHolder.tv3.setText(String.valueOf(my_act_list.get(i).Order_Account/100));//一般點數
+       // viewHolder.tv3.setText(String.valueOf(my_act_list.get(i).Order_Account/100));//一般點數
         viewHolder.tv4.setText(String.valueOf(my_act_list.get(i).Order_Memo));
 
         //若先抓第i個位置的view，在抓裡面的ID
