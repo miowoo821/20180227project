@@ -22,6 +22,7 @@ public class account_list_item_Adapter extends BaseAdapter {
     ArrayList<Accounts> my_account_list;
    // public static Account_DAO_DB Adao;
 
+
     public  account_list_item_Adapter(Context context,ArrayList<Accounts> my_account_list){
         this.context=context;
         this.my_account_list=my_account_list;
@@ -60,7 +61,7 @@ public class account_list_item_Adapter extends BaseAdapter {
         }
 
         viewHolder.tv1.setText(my_account_list.get(i).Account_Name);
-       // viewHolder.tv2.setText();暫無第二攔
+        viewHolder.tv2.setText();
 
         return view;
     }

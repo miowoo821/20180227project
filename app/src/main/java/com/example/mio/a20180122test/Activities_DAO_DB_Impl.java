@@ -138,8 +138,38 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db.close();
         return true;
     }
+    public int get_account_all_point(String use_id){
+        int all_point=0;
+        My_DB_Helper my_db_helper=new My_DB_Helper(context,GlobalVariable_User_Account);
+        db=my_db_helper.getWritableDatabase();
+        Cursor c= db.rawQuery("SELECT Order_ID_ ,Order_Act_ID,User_Name_ID_for_Order_ActPoint_list " +
+                "FROM Order_ActPoint_list where User_Name_ID_for_Order_ActPoint_list="+use_id,
+                null);
+Activities_DAO_DB_Impl DAO=new Activities_DAO_DB_Impl();
+        c.moveToFirst();
+        int Order_Account,Activity_F_Ratio;
+        for (int i=0;i<c.getCount();i++){
+
+
+            Order_Account=   DAO.get_order(Integer.valueOf( c.getString(0))).Order_Account;
+            Activity_F_Ratio=  DAO.get_activity(Integer.valueOf( c.getString(1))).Activity_F_Ratio;
+            //依序取得使用者的訂單內的金額,活動回饋倍數
+
+            all_point=all_point+ Order_Account*Activity_F_Ratio;
+
+
+            c.moveToNext();
+        }
+
+
+
+
+
+        db.close();
+        return all_point;
+    }
     @Override//作活動目前獲得點數的加總
-    public int get_act_now_point(int Order_Act_ID_1) {
+    public int get_act_now_point(String use_id, int Order_Act_ID_1) {
         My_DB_Helper my_db_helper=new My_DB_Helper(context,GlobalVariable_User_Account);
         db=my_db_helper.getWritableDatabase();
 //刪        第一個參數從外面傳入一個作為篩選條件的欄位，第二個參數是從外面傳入一個要操作加總的欄位，第三個參數是決定要抓出哪一筆資料的點數加總(只留下某筆資料)
@@ -158,12 +188,16 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //            }
 //        }
         Cursor c= db.rawQuery(
-                "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list where Order_Act_ID="+Order_Act_ID_1,null);
+                //抓出三個欄位，接著針對Order_Act_ID做篩選
+                "SELECT Order_ID_ ,Order_Act_ID,User_Name_ID_for_Order_ActPoint_list FROM Order_ActPoint_list where Order_Act_ID="+Order_Act_ID_1,null);
+
+        //        "SELECT Order_ID_ ,Order_Act_ID FROM Order_ActPoint_list " +
+//                "where Order_Act_ID="+Order_Act_ID_1+"AND  User_Name_ID_for_Order_ActPoint_list="+use_id,null);
 
         int total_point=0;
         c.moveToFirst();
         for (int i=0;i<c.getCount();i++){
-            if(  c.getString(1).equals(String.valueOf(Order_Act_ID_1)    )) {
+            if( ( c.getString(1).equals(String.valueOf(Order_Act_ID_1)) && (c.getString(2).equals(GlobalVariable_User_Account   )))) {
               total_point=total_point+ ( get_order(Integer.valueOf(c.getInt(0))).Order_Account) * (get_activity(Order_Act_ID_1).Activity_F_Ratio)/100;
                 //不是c.getInt(i)，c.getInt是抓第幾欄，不是第幾筆
             }
@@ -195,6 +229,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db=my_db_helper.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Order_ID_",order_act_point.Order_ID);
+        cv.put("User_Name_ID_for_Order_ActPoint_list",order_act_point.user_name_id);
         cv.put("Order_Act_ID",order_act_point.Order_Act_ID);
         cv.put("Order_Act",order_act_point.Order_Act);
         cv.put("Order_Act_Point",order_act_point.Order_Act_Point);
@@ -234,10 +269,10 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
                 null,null, null, null, "_id DESC");
 
         if(c.moveToFirst()){
-            Order_Act_Point s1=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+            Order_Act_Point s1=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
             my_act_list.add(s1);
             while (c.moveToNext()){
-                Order_Act_Point s=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+                Order_Act_Point s=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
                 my_act_list.add(s);
             }
         }
@@ -256,11 +291,11 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
 //                null,null, null, null, "_id DESC");
 //
         if(c.moveToFirst()){
-            Order_Act_Point s1=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+            Order_Act_Point s1=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
 
             get_order_List_filter.add(s1);
             while (c.moveToNext()){
-                Order_Act_Point s=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getInt(2),c.getString(3),c.getInt(4));
+                Order_Act_Point s=new Order_Act_Point(c.getInt(0),c.getLong(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
                 get_order_List_filter.add(s);
             }
         }
@@ -309,7 +344,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db.close();
         return my_act_list;
     }
-    @Override
+    @Override//抓特定ID訂單
     public Orders get_order(int _id) {
 
         My_DB_Helper my_db_helper=new My_DB_Helper(context,GlobalVariable_User_Account);
@@ -344,6 +379,7 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
             {
                 add_order_act(new Order_Act_Point(//新增到訂單活動資料表
                         get_order_List().get(id)._id_order,
+                        GlobalVariable_User_Account,
                         get_activity_List_filter(date).get(i1)._id,
                         get_activity_List_filter(date).get(i1).Activity_Name,
                         get_activity_List_filter(date).get(i1).Activity_F_Ratio*point

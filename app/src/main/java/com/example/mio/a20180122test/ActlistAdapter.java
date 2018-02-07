@@ -72,7 +72,7 @@ public class ActlistAdapter extends BaseAdapter {
        //viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(dao.get_order_act_list().get(i).Order_Act_ID)));
         //上面這段程式碼以第i個viewHolder去抓第i個的dao.get_order_act_list，但第0個viewHolder不代表裝在裡面的
         //要比較是要拿活動列表的ID去比才對
-       viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(dao.get_activity_List().get(i)._id)));
+       viewHolder.tv3.setText(String.valueOf(dao.get_act_now_point(GlobalVariable_User_Account,dao.get_activity_List().get(i)._id)));
 
         //若先抓第i個位置的view，在抓裡面的ID
 

@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
         //***********全域變數*****************
 
-        Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
+        Log.d("TESTTT","全域變數============="+User.get_GlobalVariable_User_Account());
 //        Name_DAO=new Account_DAO_DB(this);
 //        DatabaseName=Name_DAO.get_account("DEFAULT");//DEFAULT之後再來修改
         dao=new Activities_DAO_DB_Impl(this,GlobalVariable_User_Account);
@@ -206,10 +206,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     s3=String.valueOf(i2);
                                 }
                                 actd = s1+s2+s3;
-                                Log.d("GGGGGGGG1111111",actd);
+                                Log.d("GG111",actd);
                                 tv1_act.setText(actd);
 
-                                Log.d("GGGGGGGG1111111",tv1_act.getText().toString());
+                                Log.d("GG111",tv1_act.getText().toString());
 
                                 new DatePickerDialog(MainActivity.this, new DatePickerDialog.OnDateSetListener() {
                                     @Override
@@ -230,9 +230,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                             s3=String.valueOf(i2);
                                         }
                                         actd = s1+s2+s3;
-                                        Log.d("GGGGGGGG1111111",actd);
+                                        Log.d("GGG111",actd);
                                         tv2_act.setText(actd);
-                                        Log.d("GGGGGGGG222222222",tv2_act.getText().toString());
+                                        Log.d("GGGG222",tv2_act.getText().toString());
                                     }
                                 },mYear, mMonth, mDay).show();
                             }
@@ -548,7 +548,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             builder.setPositiveButton("確定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    long get_Newest_OrderID = dao.add_order(new Orders(//新增到訂單資料表
+                    long get_Newest_OrderID = dao.add_order(new Orders(//新增到訂單資料表==========1
                             String.valueOf(GlobalVariable_User_Account),//tv2=New_order_N_point
                             String.valueOf(tv1.getText().toString()),//tv1=New_order_date
                             Integer.valueOf(ed1.getText().toString()),//ed1=New_order_amount
@@ -558,8 +558,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     for (int i1 = 0; i1 < chks.length; i1++) {
                         if (chks[i1]) {
-                            dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表
+                            dao.add_order_act(new Order_Act_Point(//新增到訂單活動資料表==============2
                                     get_Newest_OrderID,
+                                    GlobalVariable_User_Account,
                                     dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1)._id,
                                     dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_Name,
                                     dao.get_activity_List_filter(Integer.valueOf(tv1.getText().toString())).get(i1).Activity_F_Ratio * Integer.valueOf(tv2.getText().toString())
@@ -598,17 +599,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
 
-        Log.d("TESTTT","全域變數============================"+User.get_GlobalVariable_User_Account());
+        Log.d("TESTTT","全域變數========"+User.get_GlobalVariable_User_Account());
         tv1.setText(String.valueOf(year+"年"+month+"月"));
 //        start_Day_of_the_week=0;
 //        Days_After_2000_1_1=0;
 
         //setYearMonthDay();
         //setCalendar(year,month,day);
+
+        refresh_data();
         checkDatabaseNotes();//一直跑超LAG
         super.onResume();
     }
-
+public void refresh_data(){
+    ArrayList my_act_list=new ArrayList();
+    my_act_list=dao.get_activity_List();
+    ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list,User.get_GlobalVariable_User_Account());
+    lv.setAdapter(adapter1);
+    adapter1.notifyDataSetChanged();
+    Log.d("使用者帳號","GlobalVariable_User_Account==============="+GlobalVariable_User_Account);
+}
     public void click_next(View v){
         if(month<12){
             month=month+1;
@@ -714,9 +724,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Markdate=year+Markmonth+Markday;
             //**************************************
 
-
-            Log.d("Markdate","Markdate========"+Markdate);
-            Log.d("nowdate","nowdate========"+nowdate);
+//
+//            Log.d("Markdate","Markdate========"+Markdate);
+//            Log.d("nowdate","nowdate========"+nowdate);
 
 
 
@@ -824,10 +834,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (int i = 2000; i < year ; i++) {//迴圈次數等於參數的年距離2000年有幾年，進而求出要加幾天
             if (i % 4 == 0 && i % 100 != 0 || i % 400 == 0) {//判斷這一年要不要潤
                 DAY_2000_1_1 = (DAY_2000_1_1 + 366) % 7;//潤的話這年就是+366天，接著取7餘數判斷出是星期幾
-                Log.d("GFDHDFGHGJGH","GFDHDFGHGJGH==============="+String.valueOf(DAY_2000_1_1));
+//                Log.d("GFDHDFGHGJGH","GF=="+String.valueOf(DAY_2000_1_1));
             } else {
                 DAY_2000_1_1 = (DAY_2000_1_1 + 365) % 7;////不潤的話這年就是+365天，接著取7餘數判斷出是星期幾
-                Log.d("GFDHDFGHGJGH","GFDHDFGHGJGH==============="+String.valueOf(DAY_2000_1_1));
+//                Log.d("GFDHDFGHGJGH","G=="+String.valueOf(DAY_2000_1_1));
             }
             //每次回圈決定下一年的  是星期幾
         }
@@ -886,13 +896,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setYearMonthDay(){
         if( (year%400==0) || ( year%4==0 && year%100!=0 ) )
         {
-            Log.d( "MyLog" , "Leap Year" );
+//            Log.d( "MyLog" , "Leap Year" );
             MONTH_LENGTH_LIST[1] = 29;
 
         }
         else
         {
-            Log.d( "MyLog" , "Average Year" );
+//            Log.d( "MyLog" , "Average Year" );
             MONTH_LENGTH_LIST[1] = 28;
 
         }
@@ -913,7 +923,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(Integer.valueOf(dateTextViewText)<10){
                 dateTextViewText=0+dateTextViewText;
             }
-            Log.d("dateTextViewText", "dateTextViewText===============================" + dateTextViewText);
+//            Log.d("dateTextViewText", "dateTextViewText========" + dateTextViewText);
 //-----------設一個字串變數month
             String month1;
 //------------↓在前七次迴圈，且日期大於20時(前面第一排有可能有上個月的東西)

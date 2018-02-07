@@ -28,7 +28,7 @@ import java.util.Calendar;
 
 import static com.example.mio.a20180122test.MainActivity.Name_DAO;
 
-public class Activity_list extends AppCompatActivity implements View.OnClickListener{
+public class    Activity_list extends AppCompatActivity implements View.OnClickListener{
     ImageButton imgbtn;
     public static Activity_Interface dao;
     String  actd;
@@ -342,6 +342,7 @@ public class Activity_list extends AppCompatActivity implements View.OnClickList
 //        adapter=new ActlistAdapter(Activity_list.this,dao.get_activity_List());
 //       lv2.setAdapter(adapter);//lv2記得要在大家都用的到的地方findviewbyid
 //這兩行上移
+
     }
     public void refreshData(){//重抓，會不會沒效率呢？
 
