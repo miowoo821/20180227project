@@ -92,7 +92,7 @@ public class Transfer_Fragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        view=getView();//由於生命週期的關係，在onCreat後，視圖元件才被建立，所以要放在onCreat後的週期裡
+        view=getView();//由於生命週期的關係，在onCreat後的onCreateView，視圖元件才被建立，所以要放在onCreat後的週期裡
         context=getContext();
         //***********全域變數*****************這兩行貌似可以放在onCreat裡面，因為他好像不需要視圖元件(View)
         User = (GlobalVariable) context.getApplicationContext();//全域變數(資料庫的名字)
