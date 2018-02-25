@@ -19,14 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.adapter.ActlistAdapter;
 import com.example.mio.a20180122test.data.Activities;
+import com.example.mio.a20180122test.detail.Activity_list_detail;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import static com.example.mio.a20180122test.MainActivity.Name_DAO;
 
 public class    Activity_list extends AppCompatActivity implements View.OnClickListener{
     ImageButton imgbtn;

@@ -1,4 +1,4 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.detail;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.Activity_list;
+import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Activities;
 
 public class Activity_list_detail extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class Activity_list_detail extends AppCompatActivity {
         id=getIntent().getIntExtra("position",0);
 
         Log.d("TESTTTTTTTTTTTTT",String.valueOf(id));
-        activities=Activity_list.dao.get_activity(id);
+        activities= Activity_list.dao.get_activity(id);
 
         tv1.setText(String.valueOf(activities._id));
         tv2.setText(String.valueOf(activities.Activity_S_D));

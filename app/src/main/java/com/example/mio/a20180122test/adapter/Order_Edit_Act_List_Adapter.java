@@ -1,13 +1,13 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 
 import java.util.ArrayList;

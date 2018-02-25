@@ -1,9 +1,11 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.detail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.example.mio.a20180122test.R;
 
 public class account_detail extends AppCompatActivity {
 int id;

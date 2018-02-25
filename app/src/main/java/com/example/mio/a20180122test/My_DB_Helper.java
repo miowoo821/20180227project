@@ -15,9 +15,9 @@ public class My_DB_Helper extends SQLiteOpenHelper {
 //    GlobalVariable User = (GlobalVariable)getApplicationContext();//全域變數(資料庫的名字)
 //    User.get_GlobalVariable_User_Account()
 
-    static String databasename="Default_test";
+    static String databasename="Default0";
     final static String DB_NAME = databasename+".sqlite";
-    final static int VERSION = 1;
+    final static int VERSION = 2;
     Context context;
 
     public My_DB_Helper(Context context,String GlobalVariable_User_Account) {
@@ -69,7 +69,7 @@ public class My_DB_Helper extends SQLiteOpenHelper {
             switch (oldVersion) {
                 case 1:
                     // 在UserData加上Phone欄位
-//                    sqLiteDatabase.execSQL("ALTER TABLE Order_ActPoint_list ADD COLUMN User_Name_ID_for_Order_ActPoint_list TEXT ");
+                    sqLiteDatabase.execSQL("ALTER TABLE Order_ActPoint_list ADD COLUMN User_Name_ID_for_Order_ActPoint_list TEXT ");
 //                    sqLiteDatabase.execSQL("ALTER TABLE Order_ActPoint_list ADD COLUMN TESXGWW TEXT ");
                     success = true;
                     break;

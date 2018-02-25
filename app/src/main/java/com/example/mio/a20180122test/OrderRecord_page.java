@@ -14,22 +14,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.adapter.Order_Act_List_Adapter;
+import com.example.mio.a20180122test.adapter.Order_Edit_Act_List_Adapter;
+import com.example.mio.a20180122test.adapter.act_order_item_Adapter;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import static com.example.mio.a20180122test.MainActivity.Name_DAO;
 
 public class OrderRecord_page extends AppCompatActivity implements View.OnClickListener {
     ImageButton imgbtn;

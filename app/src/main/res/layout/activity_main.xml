@@ -20,7 +20,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.1"
+            android:layout_weight="0.9"
             android:orientation="vertical">
 
             <LinearLayout
@@ -486,10 +486,10 @@
                                 android:layout_weight="1"
                                 android:background="@android:drawable/button_onoff_indicator_off"
                                 android:text="text"
+                                android:textAlignment="center"
                                 android:textSize="8sp"
                                 android:theme="@style/Base.ThemeOverlay.AppCompat"
-                                android:visibility="invisible"
-                                android:textAlignment="center" />
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/day_7_2"
@@ -510,10 +510,10 @@
                                 android:layout_weight="1"
                                 android:background="@android:drawable/button_onoff_indicator_off"
                                 android:text="text"
+                                android:textAlignment="center"
                                 android:textSize="8sp"
                                 android:theme="@style/Base.ThemeOverlay.AppCompat"
-                                android:visibility="invisible"
-                                android:textAlignment="center" />
+                                android:visibility="invisible" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -825,10 +825,10 @@
                                 android:layout_weight="1"
                                 android:background="@android:drawable/button_onoff_indicator_off"
                                 android:text="text"
+                                android:textAlignment="center"
                                 android:textSize="8sp"
                                 android:theme="@style/Base.ThemeOverlay.AppCompat"
-                                android:visibility="invisible"
-                                android:textAlignment="center" />
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/day_13_3"
@@ -878,10 +878,10 @@
                                 android:layout_weight="1"
                                 android:background="@android:drawable/button_onoff_indicator_off"
                                 android:text="text"
+                                android:textAlignment="center"
                                 android:textSize="8sp"
                                 android:theme="@style/Base.ThemeOverlay.AppCompat"
-                                android:visibility="invisible"
-                                android:textAlignment="center" />
+                                android:visibility="invisible" />
 
                             <TextView
                                 android:id="@+id/day_14_3"
@@ -2428,6 +2428,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
 
+                android:layout_weight="0.8"
                 android:background="#ffffff" />
 
         </LinearLayout>
@@ -2463,8 +2464,8 @@
 
                     <ImageButton
                         android:id="@+id/img_switch"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -2492,8 +2493,8 @@
 
                     <ImageButton
                         android:id="@+id/img_orderrecord"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -2518,8 +2519,8 @@
 
                     <ImageButton
                         android:id="@+id/imageButton"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
@@ -2544,8 +2545,8 @@
 
                     <ImageButton
                         android:id="@+id/img_activityentry"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -2571,8 +2572,8 @@
 
                     <ImageButton
                         android:id="@+id/img_index"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -2590,6 +2591,46 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5" />
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/main_tablayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.95">
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab5" />
+
+            <android.support.design.widget.TabItem
+                android:id="@+id/tabItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tab4" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Left" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Center" />
+
+            <android.support.design.widget.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Right" />
+        </android.support.design.widget.TabLayout>
 
     </LinearLayout>
 

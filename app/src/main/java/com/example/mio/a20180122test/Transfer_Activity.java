@@ -16,11 +16,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.mio.a20180122test.adapter.account_list_item_Adapter;
 import com.example.mio.a20180122test.data.Account_DAO_DB;
 import com.example.mio.a20180122test.data.Accounts;
+import com.example.mio.a20180122test.detail.account_detail;
 
 import java.util.ArrayList;
-
+//GlobalVariable_User_Account預設在GlobalVariable的java檔裡，可以想辦法改
 public class Transfer_Activity extends AppCompatActivity implements View.OnClickListener{
     ImageButton imgbtn;
     ListView account_list_lv;
@@ -56,7 +58,7 @@ public class Transfer_Activity extends AppCompatActivity implements View.OnClick
         my_account_list=new ArrayList();
         my_account_list=ADAO.get_Account_list();
 
-        adapter=new account_list_item_Adapter(Transfer_Activity.this,my_account_list);
+        adapter=new account_list_item_Adapter(Transfer_Activity.this,my_account_list,GlobalVariable_User_Account);
         account_list_lv.setAdapter(adapter);
 
 

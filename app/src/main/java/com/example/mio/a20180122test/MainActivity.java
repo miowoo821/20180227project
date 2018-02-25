@@ -4,7 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,20 +22,27 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.mio.a20180122test.adapter.ActlistAdapter;
+import com.example.mio.a20180122test.adapter.Order_Act_List_Adapter;
+import com.example.mio.a20180122test.adapter.ViewPageAdapter;
 import com.example.mio.a20180122test.data.Account_DAO_DB;
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
+import com.example.mio.a20180122test.fragment.Activity_Fragment;
+import com.example.mio.a20180122test.fragment.Main_Fragment;
+import com.example.mio.a20180122test.fragment.Order_Fragment;
+import com.example.mio.a20180122test.fragment.Rakuten_Fragment;
+import com.example.mio.a20180122test.fragment.Transfer_Fragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
-import static com.example.mio.a20180122test.Activity_list.dao;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     ImageButton imgbtn;
@@ -67,6 +75,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //String DatabaseName;
     GlobalVariable User;
     String GlobalVariable_User_Account;
+    //**********為了抓使用帳戶的ID*********************************
+//    Account_DAO_DB ADAO;(不想用了，ID不好找)
+    //**********為了抓使用帳戶的ID*********************************
+
+
+    //************************開始寫可以滑動的fragment*****************************
+    ViewPager main_ViewPager;
+    ViewPageAdapter my_ViewPageAdapter;
+    TabLayout main_TabLayout;
+    //************************以上是寫可以滑動的fragment*****************************
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +105,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         User = (GlobalVariable) getApplicationContext();//全域變數(資料庫的名字)
         GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
         //***********全域變數*****************
+
+        //**********為了抓使用帳戶的ID*********************************
+//        ADAO=new Account_DAO_DB(MainActivity.this,GlobalVariable_User_Account);(不想用了，ID不好找)
+        //**********為了抓使用帳戶的ID*********************************
 
         Log.d("TESTTT","全域變數============="+User.get_GlobalVariable_User_Account());
 //        Name_DAO=new Account_DAO_DB(this);
@@ -123,7 +147,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //****************************************************
 
 
+        //************************以下是寫可以滑動的fragment*****************************
+        my_ViewPageAdapter=new ViewPageAdapter(getSupportFragmentManager());//先new出來
+        main_TabLayout=(TabLayout)findViewById(R.id.main_tablayout);
+        main_ViewPager=(ViewPager)findViewById(R.id.main_viewpager);
+
+        main_ViewPager.setAdapter(my_ViewPageAdapter);
+
+        //以下兩行可以連動tab與viewpager
+        main_ViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(main_TabLayout));//監聽page改變
+        main_TabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(main_ViewPager));//監聽Tab改變
+
+        setup_viewpager(main_ViewPager);
+        main_ViewPager.setCurrentItem(2);
+        //************************以上是寫可以滑動的fragment*****************************
+
+
     }
+
+    //************************以下是為了寫可以滑動的fragment所準備的方法*****************************
+    public void setup_viewpager(ViewPager viewPager){
+        my_ViewPageAdapter=new ViewPageAdapter(getSupportFragmentManager());
+
+        my_ViewPageAdapter.addFragment(new Transfer_Fragment(),"change");
+        my_ViewPageAdapter.addFragment(new Order_Fragment(),"order");
+        my_ViewPageAdapter.addFragment(new Main_Fragment(),"Main");
+        my_ViewPageAdapter.addFragment(new Activity_Fragment(),"Activity");
+        my_ViewPageAdapter.addFragment(new Rakuten_Fragment(),"web");
+
+        viewPager.setAdapter(my_ViewPageAdapter);
+    }
+    //************************以上是為了寫可以滑動的fragment所準備的方法*****************************
+
+
 
     @Override
     public void onClick(View view) {
@@ -668,9 +724,6 @@ public void refresh_data(){
         //步驟一，設定當月的日期(步驟一跟二對調)
         for(int i=1; i<=MONTH_LENGTH_LIST[month-1]; ++i)//抓出陣列裡面對應的月份(從0開始所以要-1)，接著從1號開始迴圈到該月份的最後一天
         {
-
-
-
             String foo = "day_" + textDateCount+"_0";//設定一個字串(起始日的星期幾)=DateText+星期幾
             Log.d( "MyLog" , "使用ID為"+foo);
 
@@ -690,11 +743,8 @@ public void refresh_data(){
 //            //------------測試用，抓note欄
 
             int resID = getResources().getIdentifier(foo , "id" , getPackageName());
-
             TextView someDateText = (TextView) findViewById(resID);//找到TextView
-
             someDateText.setText(Integer.toString(i));//設定TextView
-
             someDateText.setBackgroundColor(0xffffffff);
 //            @android:drawable/editbox_background
 //            Drawable d = getResources().getDrawable(R.drawable.editbox_background);
@@ -751,7 +801,7 @@ public void refresh_data(){
         // 會發生的問題是....?
         if(month==1)//如果輸入的月份是1月
         {
-            for (int i = MONTH_LENGTH_LIST[11]; 1 > 0; i--)//令i等於12月的天數，然後無窮迴圈到執行break
+            for (int i = MONTH_LENGTH_LIST[11]; 1 > 0; i--)//令i等於12月的天數(因為1月的上個月就是12月)，然後無窮迴圈到執行break
             {
 
                 if (textDateCountLast > 0)//迴圈跑出有幾個上個月的天數(透過本月1號是星期幾來找出)。不能大於本月的起始星期
@@ -771,7 +821,7 @@ public void refresh_data(){
 
                     //       Log.d("MyLog", "使用TextView為" +someDateText);
                     //      Log.d("MyLog", "使用I為" +i);
-                    someDateText.setText(String.valueOf(31));//日期設定為12月的第i天(31、30、29、28、27...
+                    someDateText.setText(String.valueOf(i));//日期設定為12月的第i天(31、30、29、28、27...
 
                     textDateCountLast--;//每執行一次就-1，最後一個執行的是本星期的起始點
                 }

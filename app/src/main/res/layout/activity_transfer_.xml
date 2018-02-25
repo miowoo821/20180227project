@@ -79,8 +79,8 @@
 
                     <ImageButton
                         android:id="@+id/img_switch"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -108,8 +108,8 @@
 
                     <ImageButton
                         android:id="@+id/img_orderrecord"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -134,8 +134,8 @@
 
                     <ImageButton
                         android:id="@+id/imageButton"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
@@ -160,8 +160,8 @@
 
                     <ImageButton
                         android:id="@+id/img_activityentry"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"
@@ -187,8 +187,8 @@
 
                     <ImageButton
                         android:id="@+id/img_index"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:clickable="false"

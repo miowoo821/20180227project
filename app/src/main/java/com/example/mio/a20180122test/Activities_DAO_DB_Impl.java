@@ -138,24 +138,26 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
         db.close();
         return true;
     }
-    public int get_account_all_point(String use_id){
+    public int get_account_all_point(String use_name){//抓ID太麻煩了，直接用全域變數好了
         int all_point=0;
         My_DB_Helper my_db_helper=new My_DB_Helper(context,GlobalVariable_User_Account);
         db=my_db_helper.getWritableDatabase();
-        Cursor c= db.rawQuery("SELECT Order_ID_ ,Order_Act_ID,User_Name_ID_for_Order_ActPoint_list " +
-                "FROM Order_ActPoint_list where User_Name_ID_for_Order_ActPoint_list="+use_id,
-                null);
-Activities_DAO_DB_Impl DAO=new Activities_DAO_DB_Impl();
+        Cursor c= db.rawQuery(
+                "select  Order_ID_ ,Order_Act_ID,User_Name_ID_for_Order_ActPoint_list from  " +
+                        "Order_ActPoint_list where User_Name_ID_for_Order_ActPoint_list =? ",//有問號也可執行欸，這是SQL語法
+                new String []{use_name});
+
+
+        Activities_DAO_DB_Impl DAO=new Activities_DAO_DB_Impl(context,GlobalVariable_User_Account);
         c.moveToFirst();
         int Order_Account,Activity_F_Ratio;
         for (int i=0;i<c.getCount();i++){
-
 
             Order_Account=   DAO.get_order(Integer.valueOf( c.getString(0))).Order_Account;
             Activity_F_Ratio=  DAO.get_activity(Integer.valueOf( c.getString(1))).Activity_F_Ratio;
             //依序取得使用者的訂單內的金額,活動回饋倍數
 
-            all_point=all_point+ Order_Account*Activity_F_Ratio;
+            all_point=all_point+ Order_Account/100*Activity_F_Ratio;
 
 
             c.moveToNext();
@@ -197,6 +199,9 @@ Activities_DAO_DB_Impl DAO=new Activities_DAO_DB_Impl();
         int total_point=0;
         c.moveToFirst();
         for (int i=0;i<c.getCount();i++){
+            Log.d("","String.valueOf(Order_Act_ID_1"+String.valueOf(Order_Act_ID_1));
+            Log.d("c.getString(2)","c.getString(2)"+c.getString(2));
+            Log.d("GlobalVaria","GlobalVariable_User_Account"+GlobalVariable_User_Account);
             if( ( c.getString(1).equals(String.valueOf(Order_Act_ID_1)) && (c.getString(2).equals(GlobalVariable_User_Account   )))) {
               total_point=total_point+ ( get_order(Integer.valueOf(c.getInt(0))).Order_Account) * (get_activity(Order_Act_ID_1).Activity_F_Ratio)/100;
                 //不是c.getInt(i)，c.getInt是抓第幾欄，不是第幾筆

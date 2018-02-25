@@ -1,19 +1,18 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.mio.a20180122test.data.Activities;
+import com.example.mio.a20180122test.Activities_DAO_DB_Impl;
+import com.example.mio.a20180122test.Activity_Interface;
+import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Orders;
 
 import java.util.ArrayList;
-
-import static com.example.mio.a20180122test.MainActivity.Name_DAO;
 
 /**
  * Created by mio on 2018/1/27.

@@ -1,4 +1,4 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Orders;
 

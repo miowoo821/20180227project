@@ -1,4 +1,4 @@
-package com.example.mio.a20180122test;
+package com.example.mio.a20180122test.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.mio.a20180122test.Activities_DAO_DB_Impl;
+import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Account_DAO_DB;
 import com.example.mio.a20180122test.data.Accounts;
 import com.example.mio.a20180122test.data.Orders;
@@ -22,10 +24,18 @@ public class account_list_item_Adapter extends BaseAdapter {
     ArrayList<Accounts> my_account_list;
    // public static Account_DAO_DB Adao;
 
+    //**********兩者差異在哪********************
+   Activities_DAO_DB_Impl dao;//這邊好像只能透過介面，不然要NEW不知道去哪NEW，建構式裡嗎?不知道(答：建構式裡可以new阿)
+    //Activity_Interface dao;//介面到底是拿來幹嘛的
+    //**********兩者差異在哪********************
 
-    public  account_list_item_Adapter(Context context,ArrayList<Accounts> my_account_list){
+    String GlobalVariable_User_Account;
+
+    public  account_list_item_Adapter(Context context,ArrayList<Accounts> my_account_list,String GlobalVariable_User_Account){
         this.context=context;
         this.my_account_list=my_account_list;
+        this.GlobalVariable_User_Account=GlobalVariable_User_Account;
+       dao=new Activities_DAO_DB_Impl(context,GlobalVariable_User_Account);
 
     }
     @Override
@@ -61,7 +71,7 @@ public class account_list_item_Adapter extends BaseAdapter {
         }
 
         viewHolder.tv1.setText(my_account_list.get(i).Account_Name);
-        viewHolder.tv2.setText();
+        viewHolder.tv2.setText(String.valueOf(dao.get_account_all_point(String.valueOf(my_account_list.get(i).Account_Name))));
 
         return view;
     }

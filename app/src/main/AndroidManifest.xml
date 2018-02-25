@@ -23,10 +23,10 @@
         </activity>
         <activity android:name=".Activity_list" />
         <activity android:name=".OrderRecord_page" />
-        <activity android:name=".Activity_list_detail" />
+        <activity android:name=".detail.Activity_list_detail" />
         <activity android:name=".Rakuten_Activity" />
         <activity android:name=".Transfer_Activity" />
-        <activity android:name=".account_detail"></activity>
+        <activity android:name=".detail.account_detail"></activity>
     </application>
 
 </manifest>
