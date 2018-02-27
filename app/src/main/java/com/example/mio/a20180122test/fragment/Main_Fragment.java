@@ -3,12 +3,27 @@ package com.example.mio.a20180122test.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.mio.a20180122test.Activities_DAO_DB_Impl;
+import com.example.mio.a20180122test.GlobalVariable;
 import com.example.mio.a20180122test.R;
+import com.example.mio.a20180122test.adapter.ActlistAdapter;
+import com.example.mio.a20180122test.adapter.Calendar_ViewPagerAdapter;
+import com.example.mio.a20180122test.adapter.Order_Act_List_Adapter;
+import com.example.mio.a20180122test.adapter.ViewPageAdapter;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +38,22 @@ public class Main_Fragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    Context context;
+    View view;
+    public static Activities_DAO_DB_Impl dao;//從Interface的賦型改成Activities_DAO_DB_Impl
+    //*********活動列表用的變數****************************
+    ArrayList my_Act_List;
+    ActlistAdapter actAdapter;
+    ListView actListView;
+    //*****************************************************
+
+
+    //******************切換帳號用的變數*******************
+    GlobalVariable User;
+    String GlobalVariable_User_Account;
+    //*****************************************************
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,6 +97,40 @@ public class Main_Fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_main_, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        context=getContext();
+        view=getView();
+
+        //***********全域變數*****************
+        User = (GlobalVariable)context.getApplicationContext();//全域變數(資料庫的名字)
+        GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
+        //***********全域變數*****************
+
+        //*************************準備給顯示活動的listview丟資料********************
+        dao=new Activities_DAO_DB_Impl(this.getActivity(),GlobalVariable_User_Account);//this.getActivity()可得到此fragment所依附的Activity，可不寫this
+        my_Act_List=dao.get_activity_List();
+        actAdapter=new ActlistAdapter(this.getActivity(),my_Act_List,GlobalVariable_User_Account);
+        actListView=(ListView)view.findViewById(R.id.listview);
+        actListView.setAdapter(actAdapter);
+        //*****************************************************************
+
+
+
+        //************************開始寫可以滑動的日曆fragment*****************************
+        ViewPager calender_viewpager;
+        Calendar_ViewPagerAdapter my_CalenfarViewPageAdapter;
+
+        my_CalenfarViewPageAdapter=new Calendar_ViewPagerAdapter(getChildFragmentManager());
+        calender_viewpager=(ViewPager)view.findViewById(R.id.calender_viewpager);
+        calender_viewpager.setAdapter(my_CalenfarViewPageAdapter);
+        calender_viewpager.setCurrentItem(1);
+        //************************以上是寫可以滑動的日曆fragment*****************************
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

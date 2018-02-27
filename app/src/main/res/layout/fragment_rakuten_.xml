@@ -31,29 +31,26 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button6"
+                    android:id="@+id/pre_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="click_pre_page"
                     android:text="＜"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/index_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="click_event_index_page"
                     android:text="活動首頁"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/next_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:onClick="click_next_page"
                     android:text="＞"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
             </LinearLayout>

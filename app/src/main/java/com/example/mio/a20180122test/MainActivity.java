@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         my_act_list=dao.get_activity_List();
         ActlistAdapter adapter1=new ActlistAdapter(MainActivity.this,my_act_list,GlobalVariable_User_Account);
 
+
         lv=(ListView)findViewById(R.id.listview);
         Log.d("LV到底是甚麼呢：","答案是"+lv);
         lv.setAdapter(adapter1);

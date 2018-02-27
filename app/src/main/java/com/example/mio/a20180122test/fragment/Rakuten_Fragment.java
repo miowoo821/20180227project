@@ -2,10 +2,17 @@ package com.example.mio.a20180122test.fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.mio.a20180122test.R;
 
@@ -14,7 +21,7 @@ import com.example.mio.a20180122test.R;
  * Use the {@link Rakuten_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Rakuten_Fragment extends Fragment {
+public class Rakuten_Fragment extends Fragment implements View.OnClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -24,7 +31,9 @@ public class Rakuten_Fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
+    WebView wv;
+    View view;
+    Button btn;
     public Rakuten_Fragment() {
         // Required empty public constructor
     }
@@ -63,4 +72,52 @@ public class Rakuten_Fragment extends Fragment {
         return inflater.inflate(R.layout.fragment_rakuten_, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        view=getView();
+        wv=view.findViewById(R.id.webview);
+        wv.setWebChromeClient(new WebChromeClient());
+        wv.setWebViewClient(new WebViewClient());
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.loadUrl("https://www.rakuten.com.tw/event/");
+
+        btn=(Button)view.findViewById(R.id.pre_btn);
+        btn.setOnClickListener(this);
+        btn=(Button)view.findViewById(R.id.next_btn);
+        btn.setOnClickListener(this);
+        btn=(Button)view.findViewById(R.id.index_btn);
+        btn.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.d("GGGGGGG","GGGGGGGGGGG");
+        switch (view.getId()){
+            case R.id.pre_btn:
+
+                if(wv.canGoBack()){
+                    wv.goBack();
+                }
+                break;
+            case R.id.next_btn:
+                if(wv.canGoForward()){
+                    wv.goForward();
+                }
+                break;
+            case R.id.index_btn:
+                wv.loadUrl("https://www.rakuten.com.tw/event/");
+                break;
+        }
+
+
+    }
 }

@@ -1,13 +1,21 @@
 package com.example.mio.a20180122test.fragment;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
+import com.example.mio.a20180122test.Activities_DAO_DB_Impl;
+import com.example.mio.a20180122test.GlobalVariable;
 import com.example.mio.a20180122test.R;
+import com.example.mio.a20180122test.adapter.Order_Act_List_Adapter;
+import com.example.mio.a20180122test.adapter.act_order_item_Adapter;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +28,21 @@ public class Order_Fragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    View view;
+    Context context;
+    public static Activities_DAO_DB_Impl dao;//從Interface的賦型改成Activities_DAO_DB_Impl
+    //*****************訂單列表用的變數************************************
+    act_order_item_Adapter orderAdapter;//給訂單列表用的
+    ArrayList my_Order_List;
+    ListView orderListView;
+
+    //*********************************************************************
+
+
+    //******************切換帳號用的變數*******************
+    GlobalVariable User;
+    String GlobalVariable_User_Account;
+    //*****************************************************
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -63,4 +86,23 @@ public class Order_Fragment extends Fragment {
         return inflater.inflate(R.layout.fragment_order_, container, false);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        context=getContext();
+        view=getView();
+
+        //***********全域變數*****************
+        User = (GlobalVariable)context.getApplicationContext();//全域變數(資料庫的名字)
+        GlobalVariable_User_Account= User.get_GlobalVariable_User_Account();
+        //***********全域變數*****************
+
+        //*************************準備給顯示訂單的listview丟資料********************
+        dao=new Activities_DAO_DB_Impl(this.getActivity(),GlobalVariable_User_Account);
+        my_Order_List=dao.get_order_List();
+        orderAdapter=new act_order_item_Adapter(this.getActivity(),my_Order_List,GlobalVariable_User_Account);
+        orderListView=(ListView)view.findViewById(R.id.listView);
+        orderListView.setAdapter(orderAdapter);
+        //***************************************************************************
+    }
 }
