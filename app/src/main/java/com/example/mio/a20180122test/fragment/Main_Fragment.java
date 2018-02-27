@@ -116,7 +116,7 @@ public class Main_Fragment extends Fragment {
         actAdapter=new ActlistAdapter(this.getActivity(),my_Act_List,GlobalVariable_User_Account);
         actListView=(ListView)view.findViewById(R.id.listview);
         actListView.setAdapter(actAdapter);
-        //*****************************************************************
+        //******************************************************************
 
 
 
