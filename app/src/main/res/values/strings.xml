@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">樂天點數紀錄器</string>
+    <string name="app_name">樂天點數紀錄</string>
     <string name="expenditure">訂單金額</string>
     <string name="acc_switch">切換帳號</string>
     <string name="edit">修改</string>

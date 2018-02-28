@@ -5,17 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.mio.a20180122test.data.Activities;
 import com.example.mio.a20180122test.data.Order_Act_Point;
 import com.example.mio.a20180122test.data.Orders;
+import com.example.mio.a20180122test.helpler.My_DB_Helper;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by mio on 2018/1/22.
@@ -25,7 +21,9 @@ public class Activities_DAO_DB_Impl implements Activity_Interface {
     Context context;
     public SQLiteDatabase db;
    String GlobalVariable_User_Account;
-
+    public Activities_DAO_DB_Impl(Context context){
+        this.context=context;
+    }
     public Activities_DAO_DB_Impl(Context context,String GlobalVariable_User_Account){
         this.GlobalVariable_User_Account=GlobalVariable_User_Account;
         this.context=context;

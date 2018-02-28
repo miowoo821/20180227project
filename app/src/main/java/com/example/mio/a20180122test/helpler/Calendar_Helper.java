@@ -1,5 +1,7 @@
 package com.example.mio.a20180122test.helpler;
 
+import android.util.Log;
+
 import com.example.mio.a20180122test.adapter.Calendar_ViewPagerAdapter;
 
 import java.util.ArrayList;
@@ -120,8 +122,8 @@ public class Calendar_Helper {
             }
             //每次回圈決定下一年的  是星期幾
         }
-
         for(int i=0; i<month-1; i++){
+            Log.d("GGGGG","MONTH_LENGTH_LIST============="+month);
             DAY_2000_1_1 += MONTH_LENGTH_LIST[i];
         }
 

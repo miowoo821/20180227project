@@ -1,14 +1,12 @@
 package com.example.mio.a20180122test.data;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.example.mio.a20180122test.GlobalVariable;
-import com.example.mio.a20180122test.My_DB_Helper;
+import com.example.mio.a20180122test.helpler.My_DB_Helper;
 
 import java.util.ArrayList;
 

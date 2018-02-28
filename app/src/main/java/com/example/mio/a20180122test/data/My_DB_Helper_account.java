@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.mio.a20180122test.My_DB_Helper;
-
 /**
  * Created by Student on 2018/2/5.
  */

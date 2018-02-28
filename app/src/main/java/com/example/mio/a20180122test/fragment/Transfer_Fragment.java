@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.example.mio.a20180122test.GlobalVariable;
 import com.example.mio.a20180122test.R;
-import com.example.mio.a20180122test.Transfer_Activity;
+//import com.example.mio.a20180122test.Transfer_Activity;
 import com.example.mio.a20180122test.adapter.account_list_item_Adapter;
 import com.example.mio.a20180122test.data.Account_DAO_DB;
 import com.example.mio.a20180122test.detail.account_detail;

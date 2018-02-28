@@ -3,6 +3,7 @@ package com.example.mio.a20180122test.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.mio.a20180122test.fragment.Calendar_Fragment;
 
@@ -11,17 +12,31 @@ import com.example.mio.a20180122test.fragment.Calendar_Fragment;
  */
 
 public class Calendar_ViewPagerAdapter extends FragmentPagerAdapter {
-    public Calendar_ViewPagerAdapter(FragmentManager fm) {
+    int year;
+    int month;
+    int day;
+    public Calendar_ViewPagerAdapter(FragmentManager fm,int year,int month,int day) {
         super(fm);
+        this.day=day;
+        this.month=month;
+        this.year=year;
+
+
+
     }
+
 
     @Override
     public Fragment getItem(int position) {
-        return Calendar_Fragment.newInstance("GG","1");
+
+        return Calendar_Fragment.newInstance("GG","1",year,month,day);
+
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 200;
     }
+
+
 }

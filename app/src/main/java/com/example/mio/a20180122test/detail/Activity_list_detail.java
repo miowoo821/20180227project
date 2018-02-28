@@ -10,7 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mio.a20180122test.Activity_list;
+//import com.example.mio.a20180122test.Activity_list;
+import com.example.mio.a20180122test.Activities_DAO_DB_Impl;
 import com.example.mio.a20180122test.R;
 import com.example.mio.a20180122test.data.Activities;
 
@@ -18,7 +19,7 @@ public class Activity_list_detail extends AppCompatActivity {
 
     TextView tv1,tv2,tv3,tv4,tv5;
     EditText ed1,ed2,ed3,ed4;
-
+    Activities_DAO_DB_Impl dao;
     int id;
     Activities activities;
     @Override
@@ -40,7 +41,9 @@ public class Activity_list_detail extends AppCompatActivity {
         id=getIntent().getIntExtra("position",0);
 
         Log.d("TESTTTTTTTTTTTTT",String.valueOf(id));
-        activities= Activity_list.dao.get_activity(id);
+
+        dao=new Activities_DAO_DB_Impl(this);
+        activities= dao.get_activity(id);
 
         tv1.setText(String.valueOf(activities._id));
         tv2.setText(String.valueOf(activities.Activity_S_D));
@@ -65,7 +68,7 @@ public class Activity_list_detail extends AppCompatActivity {
          int Activity_F_Ratio=Integer.valueOf(ed2.getText().toString());
          String Activity_Memo=ed4.getText().toString();
 
-        Activity_list.dao.update_activity(new Activities(id,//抓本頁的id,id一定要給喔
+        dao.update_activity(new Activities(id,//抓本頁的id,id一定要給喔
                 Activity_Name,  Activity_S_D, Activity_E_D ,
                 Activity_F_S_D,  Activity_F_E_D, Activity_F_Limited,
                 Activity_F_Ratio, Activity_Memo));
@@ -79,7 +82,7 @@ public class Activity_list_detail extends AppCompatActivity {
         builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {//設定對話況右邊的鈕為確認，並設一個監聽器，監聽點擊事件
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Activity_list.dao.delete_activity(id);
+                dao.delete_activity(id);
                 Toast.makeText(Activity_list_detail.this,"已刪除",Toast.LENGTH_SHORT).show();
                 finish();
             }
